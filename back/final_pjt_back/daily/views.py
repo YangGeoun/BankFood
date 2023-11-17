@@ -5,8 +5,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
-from .models import Youtube, News
-from .serializer import YoutubeSerializer, NewsSerializer
+from .models import Youtube, News, Exchange
+from .serializer import YoutubeSerializer, NewsSerializer, ExchangeSerializer
 
 # Create your views here.
 @api_view(['GET'])
@@ -61,3 +61,23 @@ def getnews(request):
             news.image_url = soup.select_one('#img1').get('data-src')
             news.save()
     return Response({'asd':'asd'})
+
+
+def getexchange(request):
+    url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=9TbzRbWuNPvOkkXHBLwKrUDQjvK5wPWY&data=AP01'
+    response = requests.get(url).json()
+    exchanges = Exchange.objects.all()
+    exchanges.delete()
+    for excha in response:
+        exchange = Exchange()
+        exchange.cur_unit = excha.get('cur_unit')
+        exchange.ttb = excha.get('ttb')
+        exchange.tts = excha.get('tts')
+        exchange.deal_bas_r = excha.get('deal_bas_r')
+        exchange.bkpr = excha.get('bkpr')
+        exchange.yy_efee_r = excha.get('yy_efee_r')
+        exchange.ten_dd_efee_r = excha.get('ten_dd_efee_r')
+        exchange.kftc_bkpr = excha.get('kftc_bkpr')
+        exchange.cur_nm = excha.get('cur_nm')
+        exchange.kftc_deal_bas_r = excha.get('kftc_deal_bas_r')
+        exchange.save()
