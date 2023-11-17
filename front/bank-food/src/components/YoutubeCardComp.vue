@@ -1,5 +1,8 @@
 <template>
-  <div class="card" style="margin-left: 50px; border: 0px; border-radius: 30px;">
+  <div class="card" :class="youtubeAnimate" style="margin-left: 50px;margin-top: 50px;  border: 0px; border-radius: 30px;"
+  @mouseover="youtubeAnimate=['animate__animated','animate__pulse', 'animate__infinite']"
+  @mouseleave="youtubeAnimate = []"
+  >
     <a :href="`https://www.youtube.com/watch?v=${youtube.video_id}`" target="_blank" style="text-decoration: none; color: black;">
       <img :src="youtube.image_url" class="card-img-top" alt="..." style=" border-radius: 10px;">
       <div class="card-body">
@@ -10,9 +13,13 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+const youtubeAnimate = ref([])
+
   defineProps({
     youtube:Object
   })
+
 </script>
 
 <style scoped>

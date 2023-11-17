@@ -20,22 +20,24 @@
         </Carousel>
         
       </div>
-      <div class="balloon" style="position: absolute; width:250px; height: 200px;top: 180px; left: 1585px;">
+      <div class="balloon" style="position: absolute; width:300px; height: 250px;top: 150px; left: 1555px;">
         <p style="font-weight: bold; font-size: 20px;">캐릭터를 누르면 금융 문제가 나옵니다.</p>
       </div>
-      <img src="@/assets/QUESTION.png" style=" width: 250px; position: absolute; top:400px; left: 1600px;" alt="">
+      <img src="@/assets/QUESTION.png" style=" width: 300px; position: absolute; top:450px; left: 1550px;" alt="">
     <!-- 01 데일리(튜브) -->
 
     <div >
-      <h2 style="font-weight: bold; padding-left: 50px;">01.데일리TUBE</h2>
-      <div style="margin-top: 50px;"
+      <h2 style="font-weight: bold; padding-left: 50px;">01. 데일리TUBE</h2>
+      <div
       @mouseover="youtubeTime=3000"
       @mouseleave="youtubeTime=1"
+      id="youtubeDiv"
       >
         <Carousel :autoplay="youtubeTime" :items-to-show="5" :wrap-around="true" :transition="2000">
         <Slide v-for="youtube in stores.youtube" :key="youtube" style="margin-bottom: 20px;">
           <YoutubeCard
           :youtube="youtube"
+
           />
         </Slide>
         <template #addons>
@@ -47,17 +49,29 @@
 
 
     <!-- 02 데일리(뉴스) -->
-    <div style="margin-top: 50px; margin-bottom: 100px;">
-      <h2 style="font-weight: bold; padding-left: 80px; margin-bottom: 50px;">02.데일리NEWS</h2>
-      <div style="margin: auto;  border: 1px; background-color: white; border-radius: 30px; width: 1500px; height: 800px;" id="newsDiv"
-      class="animate__animated animate__delay-1s animate__slow"
-      :class="fadeIn"
+    <div style="margin-top: 20px;">
+      <h2 style="font-weight: bold; padding-left: 50px;">02. 데일리NEWS</h2>
+      <div style=""
       @mouseover="newsTime=3000"
       @mouseleave="newsTime=1"
+      id="newsDiv"
+      :class="fadeIn2"
       >
-      
+        <Carousel :autoplay="newsTime" :items-to-show="5" :wrap-around="true" :transition="2000">
+        <Slide v-for="news in stores.news" :key="news" style="margin-bottom: 20px;"
+
+        >
+          <NewsPage
+          :news="news"
+          />
+        </Slide>
+        <template #addons>
+          <!-- <Pagination style="margin-top:30px"/> -->
+        </template>
+      </Carousel>
       </div>
-    </div >
+    </div>  
+    
     
 
   </div>
@@ -71,21 +85,42 @@ import MainCard from '@/components/MainCardComp.vue'
 import axios from 'axios'
 import {useCounterStore} from '@/stores/counter'
 import YoutubeCard from '@/components/YoutubeCardComp.vue'
-
+import NewsPage from "@/components/NewsPage.vue";
 
 const items=ref([1,2,3,4])
 const stores = useCounterStore()
-const fadeIn = ref({
-  animate__fadeInRight : false
+
+
+const fadeIn1 = ref({
+  animate__fadeIn : false,
+  animate__animated : true,
+  'animate__delay-1s' : true,
+  animate__slow : true,
+
+})
+
+
+const fadeIn2 = ref({
+  animate__fadeIn : false,
+  animate__animated : true,
+  'animate__delay-1s' : true,
+  animate__slow : true,
+
 })
 onMounted(()=>{
   const newsDiv = document.querySelector('#newsDiv')
-
+  const youtubeDiv = document.querySelector('#youtubeDiv')
   stores.getYoutube()
-  const observer = new IntersectionObserver((now)=>{
-  fadeIn.value.animate__fadeInRight = true
+  stores.getNews()
+  const observer1 = new IntersectionObserver((now)=>{
+  fadeIn1.value.animate__fadeIn = true
 })
-observer.observe(newsDiv)
+// observer1.observe(youtubeDiv)
+
+  const observer2 = new IntersectionObserver((now)=>{
+  fadeIn2.value.animate__fadeIn = true
+})
+observer2.observe(newsDiv)
 }) 
 const youtubeTime = ref(1)
 const newsTime = ref(1)
