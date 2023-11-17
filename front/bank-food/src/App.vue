@@ -114,6 +114,7 @@ body{
   margin-right: -720px;
   text-align:center;
   width: 50px;
+  z-index: 999;
 }
 .noneDisplay {
   display: none;
