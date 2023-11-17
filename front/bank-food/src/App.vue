@@ -14,13 +14,13 @@
             </div>
 
             <div class="nav-item dropdown">
-              <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-              style="font-size: 20px; margin-left: 10%; width:130px">
+              <a class="nav-link " href="#" role="button" aria-expanded="false"
+              style="font-size: 20px; margin-left: 10%; width:130px"
+              @click="calcOpenModal"
+              >
                 환율 계산기
               </a>
-              <ul class="dropdown-menu" style="margin-top: 10px;">
-                <li><a class="dropdown-item" href="#" >Something else here</a></li>
-              </ul>
+              
             </div>
 
             <div class="nav-item dropdown">
@@ -73,7 +73,29 @@
           <img src="@/assets/USER.png" style="width: 100%;" alt="">
           <div :class="myPage" style="color: black; font-weight: bold; width: 100px;">마이페이지</div>
           </a>
+  
+      <div id="calc-modal">
+        <div class="calc-modal-content">
+          <div class="d-flex justify-content-between">
+            <h4 style="margin:0px; font-weight: bold;">환율 계산기</h4>
+            <div>
+              <h4 id="close-calc-modal" style=" cursor: pointer; font-weight: bold;"
+              @click="calcCloseModal"  
+              >X
+              </h4>
+          </div>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-center" style="width: 500px; margin-left: 30px;">
+            <div>
+              <input type="text" id="calc-input1" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; text-align: center;">
+              <input type="text" id="calc-input2" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; margin-top: 20px; text-align: center;">
+            </div>
+              <img src="@/assets/CALC.png" style="width: 70px;  cursor: pointer;" alt="">
+          </div>
         
+        </div>
+      </div>
       
   </nav>
   <RouterView/>
@@ -91,10 +113,19 @@ const myPage = ref({
   goDisplay : false,
 })
 
+const calcOpenModal = function(){
+  const calcModal = document.getElementById("calc-modal");
+  calcModal.style.display = "block";
+}
+const calcCloseModal = function(){
+  const calcModal = document.getElementById("calc-modal");
+  calcModal.style.display = "none";
+}
 
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+
 
 </style>
 
@@ -123,4 +154,48 @@ body{
 .goDisplay{
   
 }
+
+/* 모달 */
+#calc-modal {
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: none;
+        }
+        .calc-modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 700px;
+        border-radius: 15px;
+        }
+        .close-calc-modal {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+        .close-calc-modal:hover,
+        .close-calc-modal:focus {
+        color: black;
+        text-decoration: none;
+        cursor: Pointer;
+        }
+        #calc-input1:focus{
+            outline: none;
+            border: 1px solid greenyellow;
+            box-shadow: 0 0 10px greenyellow;
+        }
+        #calc-input2:focus{
+            outline: none;
+            border: 1px solid greenyellow;
+            box-shadow: 0 0 10px greenyellow;
+        }
+
 </style>

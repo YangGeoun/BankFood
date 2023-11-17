@@ -72,6 +72,7 @@
       </div>
     </div>  
     
+
     
 
   </div>
@@ -110,6 +111,8 @@ const fadeIn2 = ref({
 onMounted(()=>{
   const newsDiv = document.querySelector('#newsDiv')
   const youtubeDiv = document.querySelector('#youtubeDiv')
+  // stores.getDjangoYoutube()
+  // stores.getDjangoNews()
   stores.getYoutube()
   stores.getNews()
   const observer1 = new IntersectionObserver((now)=>{
@@ -162,5 +165,8 @@ const newsTime = ref(1)
     left: 90px;
 }
 
+
+
 </style>
+
 

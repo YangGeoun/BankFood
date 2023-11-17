@@ -6,13 +6,35 @@
   @mouseleave="function(){
     animate = []
   }"
+  @click="clickEvent"
   >
     <div class="card-body">
       <p style="font-size: 30px; height: 90px; color: white; margin-top:30%; font-weight:bold; text-shadow: 2px 2px 2px gray;">{{ name }}</p>
       <img :src="URL" style="margin-top:100px; width:150px;" alt="">
+    </div>
+  <div id="calc-modal">
+        <div class="calc-modal-content">
+          <div class="d-flex justify-content-between">
+            <h4 style="margin:0px; font-weight: bold;">환율 계산기</h4>
+            <div>
+              <h4 id="close-calc-modal" style=" cursor: pointer; font-weight: bold;"
+              @click="calcCloseModal"  
+              >X
+              </h4>
+          </div>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-center" style="width: 500px; margin-left: 30px;">
+            <div>
+              <input type="text" id="calc-input1" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; text-align: center;">
+              <input type="text" id="calc-input2" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; margin-top: 20px; text-align: center;">
+            </div>
+              <img src="@/assets/CALC.png" style="width: 70px;  cursor: pointer;" alt="">
+          </div>
+        
+        </div>
+    </div>
   </div>
-  
-</div>
 </template>
 
 <script setup>
@@ -23,6 +45,16 @@ const name = ref('')
 const background = ref('')
 const URL = ref('')
 const animate = ref([])
+const clickEvent = function(){
+  if(props.item==2){ 
+    const calcModal = document.getElementById("calc-modal");
+    calcModal.style.display = "block";
+    }
+  }
+const calcCloseModal = function(){
+  const calcModal = document.getElementById("calc-modal");
+  calcModal.style.display = "none";
+}
 onMounted(()=>{
   if(props.item == 1){
     name.value='예금/적금 조회 한번에 하기'
@@ -47,7 +79,11 @@ onMounted(()=>{
     URL.value='src/assets/ARTICLE.png'
 
   }
-})
+
+
+}
+
+)
 
 
 </script>
