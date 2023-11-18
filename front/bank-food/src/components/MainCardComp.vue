@@ -26,8 +26,8 @@
           <hr>
           <div class="d-flex justify-content-center" style="width: 500px; margin-left: 30px;">
             <div>
-              <input type="text" id="calc-input1" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; text-align: center;">
-              <input type="text" id="calc-input2" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; margin-top: 20px; text-align: center;">
+              <input type="number" id="calc-input1" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; text-align: center;">
+              <input type="number" id="calc-input2" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; margin-top: 20px; text-align: center;">
             </div>
               <img src="@/assets/CALC.png" style="width: 70px;  cursor: pointer;" alt="">
           </div>

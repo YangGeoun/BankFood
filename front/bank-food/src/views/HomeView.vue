@@ -1,8 +1,7 @@
 <template>
   <div>
     
-      <div style="width: 1500px; display: inline-block;" class="animate__animated animate__fadeIn " id="CarouselDiv">
-        
+      <div :style="carouselWidth"  style=" display:inline-block;" class="animate__animated animate__fadeIn " id="CarouselDiv">
         <Carousel :autoplay="3000" :items-to-show="3" :snap-align="'center'" :wrap-around="true"
         >
           <Slide v-for="(item,idx) in items" :key="item" style="margin-bottom: 20px;"
@@ -12,18 +11,16 @@
             :item="item"
             />
           </Slide>
-
           <template #addons>
-
             <Pagination style="margin-top:30px"/>
           </template>
         </Carousel>
         
       </div>
-      <div class="balloon" style="position: absolute; width:300px; height: 250px;top: 150px; left: 1555px;">
+      <div class="balloon" :style="balloonWidth" style="position: absolute; top: 150px;">
         <p style="font-weight: bold; font-size: 20px;">캐릭터를 누르면 금융 문제가 나옵니다.</p>
       </div>
-      <img src="@/assets/QUESTION.png" style=" width: 300px; position: absolute; top:450px; left: 1550px;" alt="">
+      <img src="@/assets/QUESTION.png" :style="pigIconWidth" style=" position: absolute; top:450px;" alt="">
     <!-- 01 데일리(튜브) -->
 
     <div >
@@ -90,8 +87,18 @@ import NewsPage from "@/components/NewsPage.vue";
 
 const items=ref([1,2,3,4])
 const stores = useCounterStore()
-
-
+const carouselWidth = ref({
+  width : `${(document.body.clientWidth/12)*10}px`
+})
+const pigIconWidth = ref({
+  width : `${(document.body.clientWidth/14)*2}px`,
+  left : `${(document.body.clientWidth/12)*(10)}px`
+})
+const balloonWidth = ref({
+  width : `${(document.body.clientWidth/14)*2}px`,
+  height : `${(document.body.clientWidth/12)*2}px`,
+  left : `${(document.body.clientWidth/12)*(10)}px`
+})
 const fadeIn1 = ref({
   animate__fadeIn : false,
   animate__animated : true,

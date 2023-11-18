@@ -57,7 +57,7 @@
       <!-- animate__heartBeat animate__infinite -->
       
         
-          <a href=""  class="floating animate__animated d-flex flex-column align-items-center"  style="text-decoration: none; " :class="userFlag"
+          <a href=""  class="floating animate__animated d-flex flex-column align-items-center"  :style="userWidth" style="text-decoration: none; " :class="userFlag"
           @mouseover="function(){ 
             userFlag=['animate__heartBeat', 'animate__infinite']
             myPage.noneDisplay = false
@@ -88,8 +88,8 @@
           <hr>
           <div class="d-flex justify-content-center" style="width: 500px; margin-left: 30px;">
             <div>
-              <input type="text" id="calc-input1" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; text-align: center;">
-              <input type="text" id="calc-input2" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; margin-top: 20px; text-align: center;">
+              <input type="number" id="calc-input1" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; text-align: center;">
+              <input type="number" id="calc-input2" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; margin-top: 20px; text-align: center;">
             </div>
               <img src="@/assets/CALC.png" style="width: 70px;  cursor: pointer;" alt="">
           </div>
@@ -105,8 +105,10 @@
 import { ref } from 'vue';
 import { RouterView } from 'vue-router';
 
-
-
+document.body.style.minWidth = document.body.clientWidth
+const userWidth = ref({
+  left : `${(document.body.clientWidth/16)*13}px`
+})
 const userFlag = ref([])
 const myPage = ref({
   noneDisplay : true,
@@ -134,15 +136,15 @@ const calcCloseModal = function(){
 /* 전역 색깔 설정 */
 body{
   background-color: #f1f3f8;
-  min-width: 1500px;
+
 }
 
 .floating {
   position: fixed; 
 
-  right: 47%; 
+   
   top: 85%; 
-  margin-right: -720px;
+  
   text-align:center;
   width: 50px;
   z-index: 999;

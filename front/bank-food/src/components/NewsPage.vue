@@ -4,10 +4,11 @@
   @mouseover="newsAnimate = ['animate__animated','animate__pulse', 'animate__infinite']"
   @mouseleave="newsAnimate = []"
   >
-    <a href="" target="_blank" style="text-decoration: none; color: black;">
+    <a :href="news.naver_url" target="_blank" style="text-decoration: none; color: black;">
       <img :src="news.image_url" class="card-img-top" alt="..." style=" border-radius: 10px; width: 100%; height: 180px;">
       <div class="card-body">
         <p class="card-text" style="height: 100px; font-weight: bold;">{{ news.title }}</p>
+      
       </div>
     </a>
 </div>
