@@ -63,6 +63,8 @@ def getnews(request):
     return Response({'asd':'asd'})
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticatedOrReadOnly])
 def getexchange(request):
     url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=9TbzRbWuNPvOkkXHBLwKrUDQjvK5wPWY&data=AP01'
     response = requests.get(url).json()
@@ -81,3 +83,11 @@ def getexchange(request):
         exchange.cur_nm = excha.get('cur_nm')
         exchange.kftc_deal_bas_r = excha.get('kftc_deal_bas_r')
         exchange.save()
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticatedOrReadOnly])
+def exchange(request):
+    exchanges = Exchange.objects.all()
+    serializer = ExchangeSerializer(exchanges, many=True)
+    return Response(serializer.data)

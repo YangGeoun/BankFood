@@ -7,4 +7,5 @@ urlpatterns = [
     path('news/', views.news),
     path('getnews/', views.getnews),
     path('getexchange/', views.getexchange),
+    path('exchange/', views.exchange),
 ]
