@@ -1,7 +1,9 @@
 <template>
   <nav class="navbar bg-body-tertiary " style="height: 100px; min-width: 1500px; padding-top: 0px;">
       <div class="container-fluid " style="font-weight: bold">
-        <img src="@/assets/ICON.gif" alt="" style="height: 100px; margin-left: 5%; padding-bottom: 20px;">
+        <img src="@/assets/ICON.gif" alt="" style="height: 100px; margin-left: 5%; padding-bottom: 20px; cursor: pointer;"
+        @click="router.push({name:'home'})"
+        >
             <div class="nav-item dropdown">
               <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
               style="font-size: 20px; width:200px"
@@ -26,6 +28,7 @@
             <div class="nav-item dropdown">
               <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
               style="font-size: 20px; margin-left: 10%; width: 180px; margin-bottom: 0;"
+              @click="router.push({name:'map'})"
               >
                 내 근처 은행
               </a>
@@ -74,7 +77,7 @@
           <div :class="myPage" style="color: black; font-weight: bold; width: 100px;">마이페이지</div>
           </a>
   
-      <div id="calc-modal">
+      <div id="calc-modal" style="z-index: 99999;">
         <div class="calc-modal-content">
           <div class="d-flex justify-content-between">
             <h4 style="margin:0px; font-weight: bold;">환율 계산기</h4>
@@ -104,10 +107,11 @@
 <script setup>
 import { ref } from 'vue';
 import { RouterView } from 'vue-router';
-
-document.body.style.minWidth = document.body.clientWidth
+import { useRouter } from 'vue-router';
+const router = useRouter()
+document.body.style.minWidth = `${screen.availHeight}px`
 const userWidth = ref({
-  left : `${(document.body.clientWidth/16)*13}px`
+  left : `${(screen.availWidth/16)*13}px`
 })
 const userFlag = ref([])
 const myPage = ref({
@@ -136,7 +140,7 @@ const calcCloseModal = function(){
 /* 전역 색깔 설정 */
 body{
   background-color: #f1f3f8;
-
+  
 }
 
 .floating {

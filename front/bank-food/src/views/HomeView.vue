@@ -85,19 +85,20 @@ import {useCounterStore} from '@/stores/counter'
 import YoutubeCard from '@/components/YoutubeCardComp.vue'
 import NewsPage from "@/components/NewsPage.vue";
 
+
 const items=ref([1,2,3,4])
 const stores = useCounterStore()
 const carouselWidth = ref({
-  width : `${(document.body.clientWidth/12)*10}px`
+  width : `${(screen.availWidth/12)*10}px`
 })
 const pigIconWidth = ref({
-  width : `${(document.body.clientWidth/14)*2}px`,
-  left : `${(document.body.clientWidth/12)*(10)}px`
+  width : `${(screen.availWidth/14)*2}px`,
+  left : `${(screen.availWidth/12)*(10)}px`
 })
 const balloonWidth = ref({
-  width : `${(document.body.clientWidth/14)*2}px`,
-  height : `${(document.body.clientWidth/12)*2}px`,
-  left : `${(document.body.clientWidth/12)*(10)}px`
+  width : `${(screen.availWidth/14)*2}px`,
+  height : `${(screen.availWidth/12)*2}px`,
+  left : `${(screen.availWidth/12)*(10)}px`
 })
 const fadeIn1 = ref({
   animate__fadeIn : false,

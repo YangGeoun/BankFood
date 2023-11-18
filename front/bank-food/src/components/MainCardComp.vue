@@ -1,5 +1,5 @@
 <template>
-  <div class="card animate__animated" :class="[background, animate]" style="border-radius: 30px; width: 18rem; height: 500px; margin-top: 50px; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);" 
+  <div class="card animate__animated" :class="[background, animate]" style="border-radius: 30px; width: 18rem; cursor: pointer; height: 500px; margin-top: 50px; box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);" 
   @mouseover="function(){
     animate = ['animate__pulse', 'animate__infinite']
   }"
@@ -39,7 +39,8 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-
+import { useRouter } from 'vue-router';
+const router = useRouter()
 const props = defineProps(['item'])
 const name = ref('')
 const background = ref('')
@@ -50,6 +51,9 @@ const clickEvent = function(){
     const calcModal = document.getElementById("calc-modal");
     calcModal.style.display = "block";
     }
+  else if(props.item==3){
+    router.push({name:'map'})
+  }
   }
 const calcCloseModal = function(){
   const calcModal = document.getElementById("calc-modal");
