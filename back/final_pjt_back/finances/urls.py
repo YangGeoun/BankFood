@@ -6,4 +6,6 @@ urlpatterns = [
     path('do/', views.getdeopsitoption),
     path('sa/', views.getsaving),
     path('so/', views.getsavingoption),
+    path('card/', views.getcard),
+    path('fund/', views.getfund),
 ]
