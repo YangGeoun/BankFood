@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from django.shortcuts import render
 from django.conf import settings
 from .models import Deposit, DepositOption, Saving, SavingOption, Card, Fund
+from .serializer import DepositSerializer, SavingSerializer
 
 # Create your views here.
 
@@ -50,6 +51,13 @@ risk_dic = {
 }
 
 @api_view(['GET'])
+def deposit(request):
+    deposits = Deposit.objects.all()
+    serializer = DepositSerializer(deposits, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 def getdeposit(request):
     url = 'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?topFinGrpNo=020000&pageNo=1&auth=c9c8354f95e8ddb8e192c5bc0859e8bf'
     response = requests.get(url).json()
@@ -67,6 +75,13 @@ def getdeposit(request):
             deposit.etc_note = product.get('etc_note')
             deposit.save()
     return Response({'asd':'asd'})
+
+
+@api_view(['GET'])
+def saving(request):
+    savings = Saving.objects.all()
+    serializer = SavingSerializer(savings, many=True)
+    return Response(serializer.data)
 
 
 @api_view(['GET'])

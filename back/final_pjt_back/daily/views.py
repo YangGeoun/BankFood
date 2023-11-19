@@ -66,11 +66,12 @@ def getnews(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def getexchange(request):
-    url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=9TbzRbWuNPvOkkXHBLwKrUDQjvK5wPWY&data=AP01'
+    url = 'https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=9TbzRbWuNPvOkkXHBLwKrUDQjvK5wPWY&data=AP01&searchdate=20231116'
     response = requests.get(url).json()
     exchanges = Exchange.objects.all()
     exchanges.delete()
     for excha in response:
+        print(excha)
         exchange = Exchange()
         exchange.cur_unit = excha.get('cur_unit')
         exchange.ttb = excha.get('ttb')
