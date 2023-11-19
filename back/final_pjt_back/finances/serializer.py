@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Deposit, DepositOption, Saving, SavingOption
+from .models import Deposit, DepositOption, Saving, SavingOption, Fund, Card
 
 class DepositOptionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,4 +24,16 @@ class SavingSerializer(serializers.ModelSerializer):
     savingoption_set = SavingOptionSerializer(many=True, read_only=True)
     class Meta:
         model = Saving
+        fields = '__all__'
+
+
+class CardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Card
+        fields = '__all__'
+
+
+class FundSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fund
         fields = '__all__'

@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 from django.shortcuts import render
 from django.conf import settings
 from .models import Deposit, DepositOption, Saving, SavingOption, Card, Fund
-from .serializer import DepositSerializer, SavingSerializer
+from .serializer import DepositSerializer, SavingSerializer, CardSerializer, FundSerializer
 
 # Create your views here.
 
@@ -167,6 +167,13 @@ def getcard(request):
 
 
 @api_view(['GET'])
+def card(request):
+    cards = Card.objects.all()
+    serializer = CardSerializer(cards, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 def getfund(request):
     url = 'https://www.fundguide.net/Fund/SimpleSearch'
 
@@ -224,8 +231,6 @@ def getfund(request):
                 lst[i].revenue_1y = tds[10].get_text().replace(',','')
             if tds[11].get_text() != '-':
                 lst[i].revenue_3y = tds[11].get_text().replace(',','')
-
-
             lst[i].risk_level = risk_dic[punds[i].select_one('.chart--danger > p').get_text()]
             if punds[i].select_one('.hashtag > span'):
                 lst[i].keyword = punds[i].select_one('.hashtag > span').get_text()
@@ -233,3 +238,11 @@ def getfund(request):
         driver.find_element(By.XPATH, '//*[@id="tabPaging"]/div/tr/button[12]').click()
         time.sleep(3)
     return Response({'asd': 'asd'})
+
+
+@api_view(['GET'])
+def fund(request):
+    funds = Fund.objects.all()
+    serializer = FundSerializer(funds, many=True)
+    return Response(serializer.data)
+
