@@ -124,8 +124,10 @@ const fadeIn2 = ref({
 onMounted(()=>{
   const newsDiv = document.querySelector('#newsDiv')
   const youtubeDiv = document.querySelector('#youtubeDiv')
-  // stores.getDjangoYoutube()
-  // stores.getDjangoNews()
+  //stores.getDjangoYoutube()
+  //stores.getDjangoNews()
+  // stores.getDjangoExchange()
+  stores.getExchange()
   stores.getYoutube()
   stores.getNews()
   const observer1 = new IntersectionObserver((now)=>{

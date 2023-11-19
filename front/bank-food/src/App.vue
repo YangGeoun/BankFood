@@ -78,7 +78,7 @@
       <div id="calc-modal" style="z-index: 99999;">
         <div class="calc-modal-content">
           <div class="d-flex justify-content-between">
-            <h4 style="margin:0px; font-weight: bold;">환율 계산기</h4>
+            <h4 style="margin:0px; margin-left: 30px; font-weight: bold;">환율 계산기</h4>
             <div>
               <h4 id="close-calc-modal" style=" cursor: pointer; font-weight: bold;"
               @click="calcCloseModal"  
@@ -86,13 +86,44 @@
               </h4>
           </div>
           </div>
-          <hr>
-          <div class="d-flex justify-content-center" style="width: 500px; margin-left: 30px;">
+          <hr style="margin:3px">
+          <div style="line-height: 60%;">
+            <br>
+
+          </div>
+          <div class="d-flex align-items-center" style="width: 500px; margin-left: 30px;">
             <div>
-              <input type="number" id="calc-input1" style="border-radius: 5px; width: 500px; height: 30px; font-size: 20px; text-align: center;">
-              <input type="number" id="calc-input2" style="border-radius: 5px; width: 500px; height: 30px; font-size: 20px; margin-top: 20px; text-align: center;">
+              <div class="d-flex">
+                <input type="number" step="0.01" v-model="country_1"   id="calc-input1" style="border-radius: 5px 0px 0px 5px; width: 400px; height: 30px; font-size: 20px; text-align: center;"
+                @focus="flag1 = true; flag2=false;"
+                >
+                <select class="form-select" v-model="value_1" aria-label="Default select example" style="width: 80px; height: 30px; font-size: 13px; font-weight: bold; border-radius: 0px 5px 5px 0px; border: 2px black; border-style: solid solid solid hidden; display: inline-block;">
+                  <option style="text-align: center;" v-for="change in store.exchange" :value="change.deal_bas_r"
+                  :id="change.cur_unit"
+                  >
+                  <label :for="change.cur_unit"><img :src="`src/assets/flag/${change.cur_unit}.png`" alt=""></label>
+                  
+                    <span>{{change.cur_unit}}</span>
+                  </option>
+
+                </select>
+              </div>
+              <div class="d-flex" style="margin-top: 20px;">
+                <input type="number" step="0.01" id="calc-input2"  v-model="country_2"  style="border-radius: 5px 0px 0px 5px; width: 400px; height: 30px; font-size: 20px;  text-align: center;"
+                @focus="flag2 = true; flag1 = false;"
+                >
+                <select class="form-select" v-model="value_2" aria-label="Default select example" style="width: 80px; height: 30px; font-size: 13px; font-weight: bold; border-radius: 0px 5px 5px 0px; border: 2px black; border-style: solid solid solid hidden; display: inline-block;">
+                  
+                  <option style="text-align: center;" v-for="change in store.exchange" :value="change.deal_bas_r">
+                    <img :src="`src/assets/flag/${change.cur_unit}.png`" alt="">
+                    {{change.cur_unit}}</option>
+
+                </select>
+              </div>
             </div>
-              <img src="@/assets/CALC.png" style="width: 70px;  cursor: pointer;" alt="">
+              <img src="@/assets/CALC.png" style="width: 70px; height: 70px; margin-left: 30px; cursor: pointer;" alt=""
+              @click="calculator()"
+              >
           </div>
         
         </div>
@@ -106,6 +137,9 @@
 import { ref } from 'vue';
 import { RouterView } from 'vue-router';
 import { useRouter } from 'vue-router';
+import {useCounterStore} from '@/stores/counter'
+
+const store = useCounterStore()
 const navWidth = ref({
   width: `${screen.availWidth}px`
 })
@@ -129,6 +163,24 @@ const calcCloseModal = function(){
   calcModal.style.display = "none";
 }
 
+
+// 환율계산기
+const country_1 = ref(null)
+const country_2 = ref(null)
+const flag1 = ref(false)
+const flag2 = ref(false)
+const value_1 = ref(null)
+const value_2 = ref(null)
+
+const calculator = function(){
+  if(flag1.value===true){
+    
+    country_2.value = parseFloat((parseFloat(country_1.value) * parseFloat(value_1.value.replace(/,/g , ''))) / parseFloat(value_2.value.replace(/,/g , '')))
+  }
+  else{
+    country_1.value = parseFloat((country_2.value * parseFloat(value_2.value.replace(/,/g , ''))) / parseFloat(value_1.value.replace(/,/g , '')))
+  }
+}
 </script>
 
 <style scoped>
@@ -178,8 +230,9 @@ body{
         background-color: #fefefe;
         margin: 15% auto;
         padding: 20px;
+        padding-left: 5px;
         border: 1px solid #888;
-        width: 700px;
+        width: 650px;
         border-radius: 15px;
         }
         .close-calc-modal {
@@ -196,12 +249,12 @@ body{
         }
         #calc-input1:focus{
             outline: none;
-            border: 1px solid greenyellow;
+            
             box-shadow: 0 0 10px greenyellow;
         }
         #calc-input2:focus{
             outline: none;
-            border: 1px solid greenyellow;
+            
             box-shadow: 0 0 10px greenyellow;
         }
 

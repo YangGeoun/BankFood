@@ -4,6 +4,7 @@ import axios from 'axios'
 
 export const useCounterStore = defineStore('counter', () => {
   const quest = ref('구미')
+  const mapType = ref(1)
   // Django Server URL for axios
   const ServerURL ='http://127.0.0.1:8000/'
   const changeQuest = function(value){
@@ -50,7 +51,24 @@ export const useCounterStore = defineStore('counter', () => {
       news.value = res.data
     })
   }
-  const mapType = ref(1)
 
-  return {ServerURL, youtube, news, quest,getDjangoYoutube, getYoutube, getDjangoNews, getNews, changeQuest, mapType }
+  const exchange = ref([])
+  const getDjangoExchange = function(){
+    axios({
+      method:'get',
+      url:`${ServerURL}daily/getexchange`
+    })
+  }
+  const getExchange = function(){
+    axios({
+      method:'get',
+      url:`${ServerURL}daily/exchange`
+    })
+    .then(res=>{
+      exchange.value = res.data
+      console.log(exchange.value)
+    })
+  }
+
+  return {ServerURL, youtube, news, quest, mapType,exchange,getDjangoExchange,getExchange ,getDjangoYoutube, getYoutube, getDjangoNews, getNews, changeQuest }
 },{persist : true})
