@@ -109,10 +109,10 @@ class Fund(models.Model):
     name = models.TextField()             # 이름
     operation_scale = models.FloatField() # 운영규모
     set_date = models.TextField()         # 설정일
-    total_reward = models.FloatField()    # 총보수 (%)
-    revenue_3m = models.FloatField()      # 3개월 수익률
-    revenue_6m = models.FloatField()      # 6개월 수익률
-    revenue_1y = models.FloatField()      # 1년 수익률
-    revenue_3y = models.FloatField()      # 3년 수익률
+    total_reward = models.FloatField(blank=True, null=True)    # 총보수 (%)
+    revenue_3m = models.FloatField(blank=True, null=True)      # 3개월 수익률
+    revenue_6m = models.FloatField(blank=True, null=True)      # 6개월 수익률
+    revenue_1y = models.FloatField(blank=True, null=True)      # 1년 수익률
+    revenue_3y = models.FloatField(blank=True, null=True)      # 3년 수익률
     risk_level = models.IntegerField()    # 1매우 낮음, 2낮음, 3보통, 4위험, 5매우위험
-    keyword = models.TextField()          # 키워드
+    keyword = models.TextField(blank=True, null=True)       # 키워드

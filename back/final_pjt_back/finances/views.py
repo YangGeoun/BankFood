@@ -40,6 +40,15 @@ benefits_dic = {
     '반려동물' : 'pet',
 }
 
+risk_dic = {
+    '매우 높은 위험' : 5,
+    '높은 위험' : 4,
+    '다소 높은 위험' : 3,
+    '보통 위험' : 2,
+    '낮은 위험': 1,
+    '매우 낮은 위험' : 0
+}
+
 @api_view(['GET'])
 def getdeposit(request):
     url = 'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?topFinGrpNo=020000&pageNo=1&auth=c9c8354f95e8ddb8e192c5bc0859e8bf'
@@ -154,42 +163,58 @@ def getfund(request):
     time.sleep(1)
 
     # 열린 페이지 소스를 받아오기
-    html = driver.page_source
+    for i in range(242):
+        html = driver.page_source
 
-    fund1 = Fund()
-    fund2 = Fund()
-    fund3 = Fund()
-    fund4 = Fund()
-    fund5 = Fund()
-    fund6 = Fund()
-    fund7 = Fund()
-    fund8 = Fund()
-    fund9 = Fund()
-    fund10 = Fund()
-    lst = [fund1,fund2,fund3,fund4,fund5,fund6,fund7,fund8,fund9,fund10]
-    
-    # 필요한 정보 파싱
-    soup = BeautifulSoup(html, "html.parser")
-    table = soup.select_one('#Grid')
-    punds = table.select('#resultList > tr')
-    
-    for i in range(10):
-        tds = punds[i].select('td')
-        # print(tds[1].select_one('a > span').get_text())    # name
-        # print(tds[3].get_text().split('(')[0])  # scale
-        # print(tds[4].get_text())                # set date
-        # print(tds[5].get_text())                # reword
-        # print(tds[8].get_text())                # 3m
-        # print(tds[9].get_text())                # 6m
-        # print(tds[10].get_text())               # 1y
-        # print(tds[11].get_text())               # 3y
-        # print(punds[i].select_one('.chart--danger > p').get_text())   # 위험도
-        # print(punds[i].select('.hashtag > span'))     # 키워드
+        fund1 = Fund()
+        fund2 = Fund()
+        fund3 = Fund()
+        fund4 = Fund()
+        fund5 = Fund()
+        fund6 = Fund()
+        fund7 = Fund()
+        fund8 = Fund()
+        fund9 = Fund()
+        fund10 = Fund()
+        lst = [fund1,fund2,fund3,fund4,fund5,fund6,fund7,fund8,fund9,fund10]
+        
+        # 필요한 정보 파싱
+        soup = BeautifulSoup(html, "html.parser")
+        table = soup.select_one('#Grid')
+        punds = table.select('#resultList > tr')
+        
+        for i in range(10):
+            tds = punds[i].select('td')
+            # print(tds[1].select_one('a > span').get_text())    # name
+            # print(tds[3].get_text().split('(')[0])  # scale
+            # print(tds[4].get_text())                # set date
+            # print(tds[5].get_text())                # reword
+            # print(tds[8].get_text())                # 3m
+            # print(tds[9].get_text())                # 6m
+            # print(tds[10].get_text())               # 1y
+            # print(tds[11].get_text())               # 3y
+            # print(punds[i].select_one('.chart--danger > p').get_text())   # 위험도
+            # if punds[i].select_one('.hashtag > span'):    # 키워드
+            #     print(punds[i].select_one('.hashtag > span').get_text())
+            lst[i].name = tds[1].select_one('a > span').get_text()
+            lst[i].operation_scale = tds[3].get_text().split('(')[0].replace(',','')
+            lst[i].set_date = tds[4].get_text()
+            if tds[5].get_text() != '-':
+                lst[i].total_reward = tds[5].get_text().replace(',','')
+            if tds[8].get_text() != '-':
+                lst[i].revenue_3m = tds[8].get_text().replace(',','')
+            if tds[9].get_text() != '-':
+                lst[i].revenue_6m = tds[9].get_text().replace(',','')
+            if tds[10].get_text() != '-':
+                lst[i].revenue_1y = tds[10].get_text().replace(',','')
+            if tds[11].get_text() != '-':
+                lst[i].revenue_3y = tds[11].get_text().replace(',','')
 
-    # print(rank[5]['alt'])
-    # classifications = soup.select('.css-1rqtlpb')
-    # classifications_list = [classification.get_text().lstrip('#') for classification in classifications ]
-    # print(classifications_list)
-    # name = soup.select('.__Latex__')
-    # print(name[5].text)
 
+            lst[i].risk_level = risk_dic[punds[i].select_one('.chart--danger > p').get_text()]
+            if punds[i].select_one('.hashtag > span'):
+                lst[i].keyword = punds[i].select_one('.hashtag > span').get_text()
+            lst[i].save()
+        driver.find_element(By.XPATH, '//*[@id="tabPaging"]/div/tr/button[12]').click()
+        time.sleep(3)
+    return Response({'asd': 'asd'})
