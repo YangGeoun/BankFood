@@ -48,7 +48,6 @@ export const useCounterStore = defineStore('counter', () => {
     })
     .then(res=>{
       news.value = res.data
-      console.log(news.value)
     })
   }
   const mapType = ref(1)

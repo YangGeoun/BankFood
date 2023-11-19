@@ -30,7 +30,7 @@
       @mouseleave="youtubeTime=1"
       id="youtubeDiv"
       >
-        <Carousel :autoplay="youtubeTime" :items-to-show="5" :wrap-around="true" :transition="2000">
+        <Carousel :autoplay="youtubeTime" :items-to-show="5" :wrap-around="true" :transition="2000" :style="dailyWidth">
         <Slide v-for="youtube in stores.youtube" :key="youtube" style="margin-bottom: 20px;">
           <YoutubeCard
           :youtube="youtube"
@@ -47,14 +47,14 @@
 
     <!-- 02 데일리(뉴스) -->
     <div style="margin-top: 20px;">
-      <h2 style="font-weight: bold; padding-left: 50px;">02. 데일리NEWS</h2>
+      <h2 style="font-weight: bold; padding-left: 50px;" >02. 데일리NEWS</h2>
       <div style=""
       @mouseover="newsTime=3000"
       @mouseleave="newsTime=1"
       id="newsDiv"
       :class="fadeIn2"
       >
-        <Carousel :autoplay="newsTime" :items-to-show="5" :wrap-around="true" :transition="2000">
+        <Carousel :autoplay="newsTime" :items-to-show="5" :wrap-around="true" :transition="2000" :style="dailyWidth">
         <Slide v-for="news in stores.news" :key="news" style="margin-bottom: 20px;"
 
         >
@@ -107,6 +107,11 @@ const fadeIn1 = ref({
   animate__slow : true,
 
 })
+
+const dailyWidth = ref({
+  width: `${screen.availWidth}px`
+})
+
 
 
 const fadeIn2 = ref({

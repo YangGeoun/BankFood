@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar bg-body-tertiary " style="height: 100px; min-width: 1500px; padding-top: 0px;">
+  <nav class="navbar bg-body-tertiary " style="height: 100px; padding-top: 0px;" :style="navWidth">
       <div class="container-fluid " style="font-weight: bold">
         <img src="@/assets/ICON.gif" alt="" style="height: 100px; margin-left: 5%; padding-bottom: 20px; cursor: pointer;"
         @click="router.push({name:'home'})"
@@ -32,9 +32,7 @@
               >
                 내 근처 은행
               </a>
-              <ul class="dropdown-menu" style="margin-top: 10px;">
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
+              
             </div>
 
             <div class="nav-item dropdown">
@@ -74,7 +72,7 @@
           }"
           >
           <img src="@/assets/USER.png" style="width: 100%;" alt="">
-          <div :class="myPage" style="color: black; font-weight: bold; width: 100px;">마이페이지</div>
+          <div :class="myPage" style="color: black; font-weight: bold; width: 100px; text-shadow: 1px 1px white;">마이페이지</div>
           </a>
   
       <div id="calc-modal" style="z-index: 99999;">
@@ -91,8 +89,8 @@
           <hr>
           <div class="d-flex justify-content-center" style="width: 500px; margin-left: 30px;">
             <div>
-              <input type="number" id="calc-input1" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; text-align: center;">
-              <input type="number" id="calc-input2" style="border-radius: 15px; width: 500px; height: 30px; font-size: 20px; margin-top: 20px; text-align: center;">
+              <input type="number" id="calc-input1" style="border-radius: 5px; width: 500px; height: 30px; font-size: 20px; text-align: center;">
+              <input type="number" id="calc-input2" style="border-radius: 5px; width: 500px; height: 30px; font-size: 20px; margin-top: 20px; text-align: center;">
             </div>
               <img src="@/assets/CALC.png" style="width: 70px;  cursor: pointer;" alt="">
           </div>
@@ -108,6 +106,9 @@
 import { ref } from 'vue';
 import { RouterView } from 'vue-router';
 import { useRouter } from 'vue-router';
+const navWidth = ref({
+  width: `${screen.availWidth}px`
+})
 const router = useRouter()
 document.body.style.minWidth = `${screen.availHeight}px`
 const userWidth = ref({
