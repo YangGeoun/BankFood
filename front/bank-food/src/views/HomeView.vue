@@ -17,8 +17,8 @@
         </Carousel>
         
       </div>
-      <div class="balloon" :style="balloonWidth" style="position: absolute; top: 150px;">
-        <p style="font-weight: bold; font-size: 20px;">캐릭터를 누르면 금융 문제가 나옵니다.</p>
+      <div class="balloon d-flex align-items-center" :style="balloonWidth" style="position: absolute; top: 150px; ">
+        <p style="font-weight: bold; font-size: 23px; text-align: center;">캐릭터를 누르면 금융 문제가　 나옵니다.</p>
       </div>
       <img src="@/assets/QUESTION.png" :style="pigIconWidth" style=" position: absolute; top:450px;" alt="">
     <!-- 01 데일리(튜브) -->
@@ -85,7 +85,6 @@ import {useCounterStore} from '@/stores/counter'
 import YoutubeCard from '@/components/YoutubeCardComp.vue'
 import NewsPage from "@/components/NewsPage.vue";
 
-
 const items=ref([1,2,3,4])
 const stores = useCounterStore()
 const carouselWidth = ref({
@@ -97,7 +96,7 @@ const pigIconWidth = ref({
 })
 const balloonWidth = ref({
   width : `${(screen.availWidth/14)*2}px`,
-  height : `${(screen.availWidth/12)*2}px`,
+  height : `${(screen.availWidth/12)*1.6}px`,
   left : `${(screen.availWidth/12)*(10)}px`
 })
 const fadeIn1 = ref({
@@ -124,8 +123,8 @@ const fadeIn2 = ref({
 onMounted(()=>{
   const newsDiv = document.querySelector('#newsDiv')
   const youtubeDiv = document.querySelector('#youtubeDiv')
-  //stores.getDjangoYoutube()
-  //stores.getDjangoNews()
+  // stores.getDjangoYoutube()
+  // stores.getDjangoNews()
   // stores.getDjangoExchange()
   stores.getExchange()
   stores.getYoutube()
@@ -133,7 +132,7 @@ onMounted(()=>{
   const observer1 = new IntersectionObserver((now)=>{
   fadeIn1.value.animate__fadeIn = true
 })
-// observer1.observe(youtubeDiv)
+observer1.observe(youtubeDiv)
 
   const observer2 = new IntersectionObserver((now)=>{
   fadeIn2.value.animate__fadeIn = true

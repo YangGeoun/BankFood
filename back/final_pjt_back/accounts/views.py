@@ -10,7 +10,7 @@ from .serializer import UserSerializer
 @api_view(['POST'])
 def signup(request):
     User = get_user_model()
-    form = CostomUserCreationForm(data=request.POST)
+    form = CostomUserCreationForm(data=request.data)
     if form.is_valid():
         form.save()
         return Response(status=status.HTTP_201_CREATED)

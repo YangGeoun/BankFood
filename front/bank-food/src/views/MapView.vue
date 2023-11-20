@@ -1,11 +1,13 @@
 <template>
         <div class="map_wrap" :style="mapWidth">
             <form onsubmit="searchPlaces(); return false; " style="z-index: 9999999; position: absolute;  top:30px;  right: 100px;;">
-                <button type="submit" class="btn btn-secondary" style=" width: 80px; height: 25px; font-weight: bold;"
+                <button type="submit" class="btn btn-secondary" style="border-radius: 15px 0px 0px 15px; border-right:1px rgb(61, 61, 61) solid; width: 80px; height: 25px; font-weight: bold;"
                 @click="stores.mapType=2"
                 >SKY MAP</button>
-                <button type="submit" class="btn btn-secondary" style="margin-left: 10px; width: 80px; height: 25px; font-weight: bold;"
-                @click="stores.mapType=1"
+                <button type="submit" class="btn btn-secondary" style="border-radius: 0px 15px 15px 0px; border-left:1px rgb(61, 61, 61) solid; width: 80px; height: 25px; font-weight: bold;
+                
+                "
+                @click="stores.mapType=1" 
                 >ROAD MAP</button>
             </form>
             <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -26,7 +28,7 @@
                 </div>
                 <hr style="margin-top: 13px;">
                 <hr>
-                <ul id="placesList" ></ul>
+                <ul id="placesList" style="font-weight: bold;"></ul>
                 <div id="pagination"></div>
             </div>
         </div>
@@ -275,6 +277,16 @@ searchPlaces();
 </script>
 
 <style scoped>
-
-
+::-webkit-scrollbar{
+    width: 13px;
+    background-color: rgba(105, 103, 103, 0.048);
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    background-color: white;
+    border : 1px solid black;
+  }
+::-webkit-scrollbar-track {
+    background-color: rgba(105, 103, 103, 0.918);
+}
 </style>

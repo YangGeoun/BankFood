@@ -45,12 +45,9 @@
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
               </ul> -->
             </div>
-
-          <!-- </ul> -->
-          <form class="d-flex" role="search" style="margin-right: 50px;">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+            <div style="margin-right: 50px;">
+              <SIgnUpModal/>
+            </div>
         <!-- </div> -->
       </div>
 
@@ -58,22 +55,29 @@
       <!-- animate__heartBeat animate__infinite -->
       
         
-          <a href=""  class="floating animate__animated d-flex flex-column align-items-center"  :style="userWidth" style="text-decoration: none; " :class="userFlag"
+          <p href=""  class="floating animate__animated d-flex flex-column align-items-center"  :style="userWidth" style="text-decoration: none; " :class="userFlag"
           @mouseover="function(){ 
-            userFlag=['animate__heartBeat', 'animate__infinite']
+
             myPage.noneDisplay = false
             myPage.goDisplay = true
+            userDropDown()
             }"
           @mouseleave="function(){ 
             userFlag=[]
             myPage.noneDisplay = true
             myPage.goDisplay = false
-          
+            userDropDownFalse()
           }"
+          
           >
-          <img src="@/assets/USER.png" style="width: 100%;" alt="">
-          <div :class="myPage" style="color: black; font-weight: bold; width: 100px; text-shadow: 1px 1px white;">마이페이지</div>
-          </a>
+          <div style="display: none; width: 50px;"  id="userDrop" >
+              <button href=""  style="width: 100px; border-radius: 15px; margin-top: 10px; margin-bottom: 10px; font-weight: bold;">LOGIN</button>
+            </div>
+            <img src="@/assets/USER.png" style="width: 100%;" alt=""
+            @click.prevent="userDropDown"
+            >
+            
+          </p>
   
       <div id="calc-modal" style="z-index: 99999;">
         <div class="calc-modal-content">
@@ -97,32 +101,31 @@
                 <input type="number" step="0.01" v-model="country_1"   id="calc-input1" style="border-radius: 5px 0px 0px 5px; width: 400px; height: 30px; font-size: 20px; text-align: center;"
                 @focus="flag1 = true; flag2=false;"
                 >
-                <select class="form-select" v-model="value_1" aria-label="Default select example" style="width: 80px; height: 30px; font-size: 13px; font-weight: bold; border-radius: 0px 5px 5px 0px; border: 2px black; border-style: solid solid solid hidden; display: inline-block;">
+                <select class="form-select" v-model="value_1" aria-label="Default select example" style="width: 150px; height: 30px; font-size: 11px; font-weight: bold; border-radius: 0px 5px 5px 0px; border: 2px black; border-style: solid solid solid hidden; display: inline-block;">
                   <option style="text-align: center;" v-for="change in store.exchange" :value="change.deal_bas_r"
                   :id="change.cur_unit"
                   >
-                  <label :for="change.cur_unit"><img :src="`src/assets/flag/${change.cur_unit}.png`" alt=""></label>
-                  
-                    <span>{{change.cur_unit}}</span>
+                    <span>{{change.cur_nm}}</span>
                   </option>
-
                 </select>
               </div>
               <div class="d-flex" style="margin-top: 20px;">
                 <input type="number" step="0.01" id="calc-input2"  v-model="country_2"  style="border-radius: 5px 0px 0px 5px; width: 400px; height: 30px; font-size: 20px;  text-align: center;"
                 @focus="flag2 = true; flag1 = false;"
                 >
-                <select class="form-select" v-model="value_2" aria-label="Default select example" style="width: 80px; height: 30px; font-size: 13px; font-weight: bold; border-radius: 0px 5px 5px 0px; border: 2px black; border-style: solid solid solid hidden; display: inline-block;">
-                  
-                  <option style="text-align: center;" v-for="change in store.exchange" :value="change.deal_bas_r">
-                    <img :src="`src/assets/flag/${change.cur_unit}.png`" alt="">
-                    {{change.cur_unit}}</option>
+                <select class="form-select" v-model="value_2" aria-label="Default select example" style="width: 150px; height: 30px; font-size: 11px; font-weight: bold; border-radius: 0px 5px 5px 0px; border: 2px black; border-style: solid solid solid hidden; display: inline-block;">
+                  <option style="text-align: center;
+                  " v-for="change in store.exchange" :value="change.deal_bas_r">
+                    {{change.cur_nm}}
+                  </option>
 
                 </select>
               </div>
             </div>
-              <img src="@/assets/CALC.png" style="width: 70px; height: 70px; margin-left: 30px; cursor: pointer;" alt=""
+              <img src="@/assets/CALC.png" style="width: 70px; height: 70px; margin-left: 15px; cursor: pointer;" alt=""
               @click="calculator()"
+              class="animate__animated animate__infinite"
+              :class="{'animate__headShake' : calcFlag}"
               >
           </div>
         
@@ -138,6 +141,7 @@ import { ref } from 'vue';
 import { RouterView } from 'vue-router';
 import { useRouter } from 'vue-router';
 import {useCounterStore} from '@/stores/counter'
+import SIgnUpModal from './components/SIgnUpModal.vue';
 
 const store = useCounterStore()
 const navWidth = ref({
@@ -146,7 +150,8 @@ const navWidth = ref({
 const router = useRouter()
 document.body.style.minWidth = `${screen.availHeight}px`
 const userWidth = ref({
-  left : `${(screen.availWidth/16)*13}px`
+  left : `${(screen.availWidth/16)*13}px`,
+
 })
 const userFlag = ref([])
 const myPage = ref({
@@ -173,14 +178,35 @@ const value_1 = ref(null)
 const value_2 = ref(null)
 
 const calculator = function(){
+  calcFlag.value = true
+
   if(flag1.value===true){
-    
+
     country_2.value = parseFloat((parseFloat(country_1.value) * parseFloat(value_1.value.replace(/,/g , ''))) / parseFloat(value_2.value.replace(/,/g , '')))
+
   }
   else{
     country_1.value = parseFloat((country_2.value * parseFloat(value_2.value.replace(/,/g , ''))) / parseFloat(value_1.value.replace(/,/g , '')))
+
   }
+  setTimeout(()=>{
+    calcFlag.value=false
+  },1000)
+
+} 
+const calcFlag = ref(false)
+
+
+const userDropDown = function(){
+  const userDrop = document.querySelector('#userDrop')
+  userDrop.style.display = 'block'
 }
+const userDropDownFalse = function(){
+  const userDrop = document.querySelector('#userDrop')
+  userDrop.style.display = 'none'
+}
+
+
 </script>
 
 <style scoped>
@@ -199,7 +225,6 @@ body{
 .floating {
   position: fixed; 
 
-   
   top: 85%; 
   
   text-align:center;
@@ -232,7 +257,7 @@ body{
         padding: 20px;
         padding-left: 5px;
         border: 1px solid #888;
-        width: 650px;
+        width: 700px;
         border-radius: 15px;
         }
         .close-calc-modal {
@@ -257,5 +282,7 @@ body{
             
             box-shadow: 0 0 10px greenyellow;
         }
+
+
 
 </style>
