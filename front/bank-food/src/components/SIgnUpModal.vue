@@ -1,6 +1,6 @@
 <template>
   <div>
-  <button style="width: 100px; border-radius: 15px; font-weight: bold;" id="open-SIGNUP-modal">SIGN UP</button>
+  <button style="width: 100px; border-radius: 15px 0px 0px 15px; border-right: 0px; font-weight: bold;" id="open-SIGNUP-modal">SIGN UP</button>
   <div id="SIGNUP-modal">
         <div class="SIGNUP-modal-content" >
           <div class="d-flex justify-content-between ">
@@ -106,7 +106,7 @@ const makeAccount = function(){
           .catch(err => {
             const errCode = err.response.data
             for( const code in errCode){
-              message.value = errCode[code]
+              message.value = code + ' ' +errCode[code]
             }
           })
         }

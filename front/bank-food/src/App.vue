@@ -45,8 +45,9 @@
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
               </ul> -->
             </div>
-            <div style="margin-right: 50px;">
-              <SIgnUpModal/>
+            <div style="margin-right: 50px;" class="d-flex">
+              <SIgnUpModal  style="border-right: 0px;" />
+              <LoginModal style="border-left: 0px;" />
             </div>
         <!-- </div> -->
       </div>
@@ -71,10 +72,8 @@
           
           >
           <div style="display: none; width: 50px;"  id="userDrop" >
-              <button href=""  style="width: 100px; border-radius: 15px; margin-top: 10px; margin-bottom: 10px; font-weight: bold;">LOGIN</button>
             </div>
             <img src="@/assets/USER.png" style="width: 100%;" alt=""
-            @click.prevent="userDropDown"
             >
             
           </p>
@@ -142,7 +141,7 @@ import { RouterView } from 'vue-router';
 import { useRouter } from 'vue-router';
 import {useCounterStore} from '@/stores/counter'
 import SIgnUpModal from './components/SIgnUpModal.vue';
-
+import LoginModal from './components/LoginModal.vue';
 const store = useCounterStore()
 const navWidth = ref({
   width: `${screen.availWidth}px`
