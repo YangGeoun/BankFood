@@ -59,6 +59,8 @@ def getnews(request):
             res = requests.get(item.get('link'))
             abc = res.text
             soup = BeautifulSoup(abc, 'html.parser')
+            if not soup.select_one('#img1'):
+                continue
             if not soup.select_one('#img1').get('data-src'):
                 continue
             news.image_url = soup.select_one('#img1').get('data-src')

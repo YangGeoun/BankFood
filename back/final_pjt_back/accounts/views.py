@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from .form import CostomUserCreationForm
 from .serializer import UserSerializer
+from finances.models import Deposit, Saving
 
 # Create your views here.
 @api_view(['POST'])
@@ -56,16 +57,37 @@ while i < N:
     
     username_list.append(rn)
     i += 1
+lst = [
+    '전국',
+ '서울특별시',
+ '부산광역시',
+ '대구광역시',
+ '인천광역시',
+ '광주광역시',
+ '대전광역시',
+ '울산광역시',
+ '세종특별자치시',
+ '경기도',
+ '강원특별자치도',
+ '충청북도',
+ '충청남도',
+ '전라북도',
+ '전라남도',
+ '경상북도',
+ '경상남도',
+ '제주특별자치도'
 
+]
     
 @api_view(['GET'])
 def dummy(request):
     User = get_user_model()
+    User.objects.all().delete()
     for i in range(N):
         user = User()
         user.nickname = username_list[i]
         user.username = username_list[i]
-        user.age = random.randint(1, 100)  # 나이
+        user.age = random.randint(1, 150)  # 나이
         user.money = random.randrange(0, 1000000000, 1000000)   # 현재 가진 금액
         user.salary = random.randrange(0, 150000000, 100000) # 연봉
         user.password = "1234"
@@ -73,7 +95,18 @@ def dummy(request):
         user.is_staff = False
         user.is_superuser = False
         user.gender = random.choice([True, False])
+        user.address = random.choice(lst)
         user.save()
-
+        num = random.randint(1,6)
+        for i in range(num):
+            is_deposit = random.choice([True, False])
+            if is_deposit:
+                deposit = Deposit.objects.get(pk=random.randint(1,38))
+                deposit.user.add(user)
+            else:
+                saving = Saving.objects.get(pk=random.randint(1,62))
+                saving.user.add(user)
+                
+        
     return Response({'asd':'as'})
     
