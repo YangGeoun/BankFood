@@ -10,4 +10,5 @@ urlpatterns = [
     path('accounts/', include('dj_rest_auth.urls')),
     path('accounts/signup/', views.signup),
     path('accounts/userinfo/', views.userinfo),
+    path('test/', views.dummy),
 ]

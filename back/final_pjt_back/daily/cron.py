@@ -3,8 +3,6 @@ import requests
 from bs4 import BeautifulSoup
 from models import Youtube, News, Exchange
 
-
-
 def getyoutube():
     url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=AIzaSyDhIuh0Zm5__5XL7Mb6MjhNdsLb_EENEOc&q=금융&maxResults=10'
     response = requests.get(url).json()
