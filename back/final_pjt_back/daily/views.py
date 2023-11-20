@@ -16,7 +16,7 @@ def youtube(request):
     serializer = YoutubeSerializer(youtubes,many=True)
     return Response(serializer.data)
 
-
+ 
 @api_view(['GET'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def getYoutube(request):
@@ -24,7 +24,10 @@ def getYoutube(request):
     response = requests.get(url).json()
     for video in response.get('items'):
         youtube = Youtube()
-        youtube.title = html.unescape(video.get('snippet').get('title'))
+        if len(html.unescape(video.get('snippet').get('title'))) > 50:
+            youtube.title = html.unescape(video.get('snippet').get('title'))[:50] + '...'
+        else:
+            youtube.title = html.unescape(video.get('snippet').get('title'))
         youtube.description = html.unescape(video.get('snippet').get('description'))
         youtube.video_id = html.unescape(video.get('id').get('videoId'))
         youtube.image_url = html.unescape(video.get('snippet').get('thumbnails').get('high').get('url'))
@@ -50,13 +53,13 @@ def getnews(request):
         print(item.get('link'))
         if 'news.naver' in item.get('link'):
             news = News()
-            news.title = html.unescape(item.get('title'))
-            news.description = html.unescape(item.get('description'))
+            news.title = html.unescape(item.get('title')).replace('<b>','').replace('</b>','')
+            news.description = html.unescape(item.get('description')).replace('<b>','').replace('</b>','')
             news.naver_url = item.get('link')
             res = requests.get(item.get('link'))
             abc = res.text
             soup = BeautifulSoup(abc, 'html.parser')
-            if not soup.select_one('#img1'):
+            if not soup.select_one('#img1').get('data-src'):
                 continue
             news.image_url = soup.select_one('#img1').get('data-src')
             news.save()

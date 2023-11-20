@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.shortcuts import render
+from django.shortcuts import get_list_or_404, get_object_or_404
 from django.conf import settings
 from .models import Deposit, DepositOption, Saving, SavingOption, Card, Fund
 from .serializer import DepositSerializer, SavingSerializer, CardSerializer, FundSerializer
@@ -246,3 +246,46 @@ def fund(request):
     serializer = FundSerializer(funds, many=True)
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def test(request):
+    conditions = request.GET
+    cards = Card.objects.all()
+    if conditions.get('medical') == '1':
+        cards = cards.filter(medical__isnull=False)
+    if conditions.get('medical') == '2':
+        cards = cards.filter(medical__isnull=True)
+    if conditions.get('cafe') == '1':
+        cards = cards.filter(cafe_bakery__isnull=False)
+    if conditions.get('cafe') == '2':
+        cards = cards.filter(cafe_bakery__isnull=True)
+    if conditions.get('simple_payment') == '1':
+        cards = cards.filter(easy_payment__isnull=False)
+    if conditions.get('simple_payment') == '2':
+        cards = cards.filter(easy_payment__isnull=True)
+    if conditions.get('supermaket') == '1':
+        cards = cards.filter(supermarket__isnull=False)
+    if conditions.get('supermaket') == '2':
+        cards = cards.filter(convenience_store__isnull=False)
+    if conditions.get('car') == '1':
+        cards = cards.filter(fuel__isnull=False)
+    if conditions.get('car') == '2':
+        cards = cards.filter(public_transport__isnull=False)
+    if conditions.get('simple_payment') == '1':
+        cards = cards.filter(easy_payment__isnull=False)
+    if conditions.get('simple_payment') == '2':
+        cards = cards.filter(easy_payment__isnull=True)
+    serializer = CardSerializer(cards, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def test(request):
+    conditions = request.GET
+    funds = Fund.objects.all()
+    if conditions.get('medical') == '1':
+        cards = cards.filter(medical__isnull=False)
+    if conditions.get('medical') == '2':
+        cards = cards.filter(medical__isnull=True)
+    serializer = FundSerializer(funds, many=True)
+    return Response(serializer.data)
