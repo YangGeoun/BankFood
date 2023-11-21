@@ -18,14 +18,16 @@
             <div style="display: inline-block; width: 510px;">
                 <div class="d-flex justify-content-between" style="margin-top: 20px;">
                   <label for="id" style="font-weight: 30px; font-size: 25px;">ID :　</label>
-                  <input type="text" id="id" style="border-radius: 15px; width: 300px; height: 30px; font-size: 20px; text-align: center;">
+                  <input type="text" id="id" style="border-radius: 15px; width: 300px; height: 30px; font-size: 20px; text-align: center;" v-model="username">
                 </div>
                 <div class="d-flex justify-content-between" style="margin-top: 20px;">
                 <label for="password" style="font-weight: 30px; font-size: 25px;">password :　</label>
-                <input type="password" id="password" style="border-radius: 15px; width: 300px; height: 30px; font-size: 20px; text-align: center;">
+                <input type="password" id="password" style="border-radius: 15px; width: 300px; height: 30px; font-size: 20px; text-align: center;" v-model="password">
               </div>
               <br>
-              <Button class="btn" style="border-radius: 50px; width: 500px; border: 2px solid lightgreen; font-weight: bold;">LOGIN</Button>
+              <Button class="btn" style="border-radius: 50px; width: 500px; border: 2px solid lightgreen; font-weight: bold;"
+              @click = login(username,password)
+              >LOGIN</Button>
             </div>
             <div style="display: inline-block;  ">
               <img src="@/assets/LOGIN.gif" alt="" style="width: 200px; height: 200px;">
@@ -37,7 +39,44 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useCounterStore } from '../stores/counter';
+import axios from 'axios';
+
+const username = ref('')
+const password = ref('')
+const store = useCounterStore()
+const message = ref('')
+
+  const login = function(username,password){
+    axios({
+      method : 'post',
+      url : `http://127.0.0.1:8000/accounts/login/`,
+      data : {
+        username,
+        password,
+      }
+    })
+    .then(res=>{
+      store.token = res.data.key
+      const LOGINModal = document.getElementById("LOGIN-modal")
+      LOGINModal.style.display = "none"
+      axios({
+        method: 'get',
+        url : `http://127.0.0.1:8000/accounts/userinfo/`,
+        headers : {
+          Authorization : `Token ${res.data.key}`
+        }
+      })
+      .then(userInfo =>{
+        store.userInfo =  
+        console.log(store.userInfo)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
 
 onMounted(()=>{

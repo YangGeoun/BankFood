@@ -46,8 +46,15 @@
               </ul> -->
             </div>
             <div style="margin-right: 50px;" class="d-flex">
-              <SIgnUpModal  style="border-right: 0px;" />
-              <LoginModal style="border-left: 0px;" />
+              <SIgnUpModal  style="border-right: 0px;" v-if="!store.token"/>
+              <LoginModal style="border-left: 0px;" v-if="!store.token"/>
+              <button id="MyPage" style="width: 100px; border-radius: 15px 0px 0px 15px; border-right: 0px;   font-weight: bold;" v-if="store.token"
+              @click="router.push({name:'mypage'})"
+              >My Page</button>
+              <button id="LogOut" style="width: 100px; border-radius: 0px 15px 15px 0px; border-right: 0px;   font-weight: bold;" v-if="store.token"
+              @click="logout()"
+              >LOGOUT</button>
+              
             </div>
         <!-- </div> -->
       </div>
@@ -142,6 +149,30 @@ import { useRouter } from 'vue-router';
 import {useCounterStore} from '@/stores/counter'
 import SIgnUpModal from './components/SIgnUpModal.vue';
 import LoginModal from './components/LoginModal.vue';
+import axios from 'axios';
+import MyPage from './views/MyPage.vue';
+const logout = function(){
+  axios({
+    url :`http://127.0.0.1:8000/accounts/logout/`,
+    method : 'get',
+    headers :{
+      Authorization : `Token ${store.token}`
+    }
+  })
+  .then(
+    res=>{
+    store.token = null
+    store.userInfo = {}
+  }
+  )
+  .catch(err=>{
+    console.log(err)
+    store.token = null
+    store.userInfo = {}
+  }
+    )
+}
+
 const store = useCounterStore()
 const navWidth = ref({
   width: `${screen.availWidth}px`
@@ -180,7 +211,7 @@ const calculator = function(){
   calcFlag.value = true
 
   if(flag1.value===true){
-
+    const calcInput2 = document.querySelector('#calc-input2')
     country_2.value = parseFloat((parseFloat(country_1.value) * parseFloat(value_1.value.replace(/,/g , ''))) / parseFloat(value_2.value.replace(/,/g , '')))
 
   }
@@ -209,6 +240,42 @@ const userDropDownFalse = function(){
 </script>
 
 <style scoped>
+
+#MyPage:focus{
+            outline: none;
+            border: 1px solid deepskyblue;
+            box-shadow: 0 0 10px deepskyblue;
+        }
+        #MyPage:hover{
+          outline: none;
+            border: 1px solid deepskyblue;
+            box-shadow: 0 0 10px deepskyblue;
+        }
+        #MyPage:hover{
+          outline: none;
+          
+            border: 1px solid deepskyblue;
+            border-left: 0px;
+            box-shadow: 0 0 10px deepskyblue;
+        }
+
+        #LogOut:focus{
+            outline: none;
+            border: 1px solid red;
+            box-shadow: 0 0 10px red;
+        }
+        #LogOut:hover{
+          outline: none;
+            border: 1px solid red;
+            box-shadow: 0 0 10px red;
+        }
+        #LogOut:hover{
+          outline: none;
+          
+            border: 1px solid red;
+            border-left: 0px;
+            box-shadow: 0 0 10px red;
+        }
 
 
 </style>

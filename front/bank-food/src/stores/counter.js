@@ -3,6 +3,9 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 export const useCounterStore = defineStore('counter', () => {
+  // 로그인 처리
+  const userInfo = ref({})
+  const token = ref(null)
   const quest = ref('구미')
   const mapType = ref(1)
   // Django Server URL for axios
@@ -70,5 +73,5 @@ export const useCounterStore = defineStore('counter', () => {
     })
   }
 
-  return {ServerURL, youtube, news, quest, mapType,exchange,getDjangoExchange,getExchange ,getDjangoYoutube, getYoutube, getDjangoNews, getNews, changeQuest }
+  return {userInfo ,token, ServerURL, youtube, news, quest, mapType,exchange,getDjangoExchange,getExchange ,getDjangoYoutube, getYoutube, getDjangoNews, getNews, changeQuest,  }
 },{persist : true})

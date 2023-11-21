@@ -21,7 +21,7 @@
             <div style="display: inline-block; width: 510px;">
                 <div class="d-flex justify-content-between" style="margin-top: 20px;">
                   <label for="id" style="font-weight: 30px; font-size: 25px;">ID :　</label>
-                  <input type="text" id="id" style="border-radius: 15px; width: 300px; height: 30px; font-size: 20px; text-align: center;" v-model="nickname">
+                  <input type="text" id="id" style="border-radius: 15px; width: 300px; height: 30px; font-size: 20px; text-align: center;" v-model="username">
                 </div>
                 <div class="d-flex justify-content-between" style="margin-top: 20px;">
                 <label for="password" style="font-weight: 30px; font-size: 25px;">password :　</label>
@@ -34,7 +34,7 @@
               <div class="d-flex justify-content-between" style="margin-top: 20px;">
 
                 <label for="username" style="font-weight: 30px; font-size: 25px;">name :　</label>
-                <input type="text" id="username" style="border-radius: 15px; width: 300px; height: 30px; font-size: 20px; text-align: center;" v-model="username">
+                <input type="text" id="username" style="border-radius: 15px; width: 300px; height: 30px; font-size: 20px; text-align: center;" v-model="nickname">
               </div>
               <div class="d-flex align-items-center justify-content-between" style="margin-top: 20px;">
                 <div class="d-flex align-items-center">
