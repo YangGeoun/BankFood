@@ -51,7 +51,7 @@
               <button id="MyPage" style="width: 100px; border-radius: 15px 0px 0px 15px; border-right: 0px;   font-weight: bold;" v-if="store.token"
               @click="router.push({name:'mypage'})"
               >My Page</button>
-              <button id="LogOut" style="width: 100px; border-radius: 0px 15px 15px 0px; border-right: 0px;   font-weight: bold;" v-if="store.token"
+              <button id="LogOut" style="width: 100px; border-radius: 0px 15px 15px 0px;    font-weight: bold;" v-if="store.token"
               @click="logout()"
               >LOGOUT</button>
               

@@ -69,7 +69,7 @@ const message = ref('')
         }
       })
       .then(userInfo =>{
-        store.userInfo =  
+        store.userInfo =  userInfo.data
         console.log(store.userInfo)
       })
     })
