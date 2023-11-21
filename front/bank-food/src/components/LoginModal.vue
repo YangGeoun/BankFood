@@ -42,6 +42,7 @@
 import { onMounted, ref } from 'vue';
 import { useCounterStore } from '../stores/counter';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const username = ref('')
 const password = ref('')
@@ -71,10 +72,21 @@ const message = ref('')
       .then(userInfo =>{
         store.userInfo =  userInfo.data
         console.log(store.userInfo)
+        Swal.fire({
+          
+          icon: "success",
+          title: `Login Success !! \n ${userInfo.data.nickname}님 환영합니다`,
+          showConfirmButton: false,
+          timer: 1500
+          });
       })
     })
     .catch(err => {
-      console.log(err)
+      Swal.fire({
+        icon: "error",
+        title: "NOPE !!",
+        text: "아이디 혹은 비밀번호를 다시 확인해주세요.",
+      });
     })
   }
 

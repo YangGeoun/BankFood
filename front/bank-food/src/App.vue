@@ -152,8 +152,19 @@ import SIgnUpModal from './components/SIgnUpModal.vue';
 import LoginModal from './components/LoginModal.vue';
 import axios from 'axios';
 import MyPage from './views/MyPage.vue';
+import Swal from 'sweetalert2';
+
 const logout = function(){
-  axios({
+  Swal.fire({
+  title: "로그아웃 하시겠습니까?",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "YES"
+}).then((result) => {
+  if (result.isConfirmed) {
+    axios({
     url :`http://127.0.0.1:8000/accounts/logout/`,
     method : 'get',
     headers :{
@@ -172,6 +183,14 @@ const logout = function(){
     store.userInfo = {}
   }
     )
+    Swal.fire({
+      title: "로그아웃이 완료되었습니다.",
+      icon: "success"
+    });
+  }
+}
+);
+  
 }
 
 const store = useCounterStore()

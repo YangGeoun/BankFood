@@ -8,71 +8,71 @@
     <!-- <a href="https://www.flaticon.com/free-icons/warning" title="warning icons">Warning icons created by Pixel perfect - Flaticon</a> -->
     </div>
 
-    <div v-if="store.token" style="margin: auto; margin-top: 50px;" :style="pageBody">
+    <div v-if="store.token" style="margin: auto; margin-top: 30px; margin-bottom: 50px;" :style="pageBody">
       <div class="listBox" style="position: relative;">
         
-      <div style="">
-          <h2 :style="pageBody">My Page</h2>
-          <div class="d-flex flex-row" style="width: 1500px;">
-            <ul>
-              <li
-              @click="()=>{
-                flag_1= true;
-                flag_2=false;
-                flag_3=false;
-              }"
-              
-              ><span>1</span><p style="font-weight: 600; font-size: 20px;">My Info</p></li>
-              <li
-              @click="()=>{
-                flag_1= false;
-                flag_2=true;
-                flag_3=false;
-              }"
-              
-              ><span>2</span><p style="font-weight: 600; font-size: 20px;">My Articles</p></li>
-              <li
-              @click="()=>{
-                flag_1= false;
-                flag_2=false;
-                flag_3=true;
-              }"
-              
-              ><span>3</span><p style="font-weight: 600;  font-size: 20px;">My Bank Info</p></li>
-            </ul>
-            <div style="background-color: white; height: 620px; width: 950px; margin: 0px; margin-left: 30px; border-radius: 10px;
-            overflow: hidden;
-            ">
-              <div style="background-color:rgb(145, 144, 144) ; width: 1000px; height: 50px; "
-              class="d-flex align-items-center"
-              >
-              <div style="border-radius: 50%; background-color: yellow; z-index: 999; width: 10px; height: 10px;
-              margin-left: 20px;
-              "></div>
-              <div style="border-radius: 50%; background-color: green; z-index: 999; width: 10px; height: 10px;
-              margin-left: 5px;
-              "></div>
-              <div style="border-radius: 50%; background-color: red; z-index: 999; width: 10px; height: 10px;
-              margin-left: 5px;
-              "></div>
+        <div style="">
+            <h2 :style="pageBody">My Page</h2>
+            <div class="d-flex flex-row" :style="pageBody">
+              <ul>
+                <li
+                @click="()=>{
+                  flag_1= true;
+                  flag_2=false;
+                  flag_3=false;
+                }"
+                
+                ><span>1</span><p style="font-weight: 600; font-size: 20px;">My Info</p></li>
+                <li
+                @click="()=>{
+                  flag_1= false;
+                  flag_2=true;
+                  flag_3=false;
+                }"
+                
+                ><span>2</span><p style="font-weight: 600; font-size: 20px;">My Articles</p></li>
+                <li
+                @click="()=>{
+                  flag_1= false;
+                  flag_2=false;
+                  flag_3=true;
+                }"
+                
+                ><span>3</span><p style="font-weight: 600;  font-size: 20px;">My Bank Info</p></li>
+              </ul>
+              <div style="background-color: white; height: 620px; width: 950px; margin: 0px; margin-left: 30px; border-radius: 10px;
+              overflow: hidden;
+              ">
+                <div style="background-color:rgb(145, 144, 144) ; width: 1000px; height: 50px; "
+                class="d-flex align-items-center"
+                >
+                <div style="border-radius: 50%; background-color: yellow; z-index: 999; width: 10px; height: 10px;
+                margin-left: 20px;
+                "></div>
+                <div style="border-radius: 50%; background-color: green; z-index: 999; width: 10px; height: 10px;
+                margin-left: 5px;
+                "></div>
+                <div style="border-radius: 50%; background-color: red; z-index: 999; width: 10px; height: 10px;
+                margin-left: 5px;
+                "></div>
+                </div>
+                <div style="background-color: white;  height: 570px; width: 100%; overflow: scroll;">
+                  <MyInfo
+                  v-if="flag_1"
+                  :userInfo="store.userInfo"
+                  />
+                  <MyArticles
+                  v-if="flag_2"
+                  />
+                  <MyBankInfo
+                  v-if="flag_3"
+                  />
               </div>
-              <div style="background-color: white;  height: 570px; width: 100%; overflow: scroll;">
-                <MyInfo
-                v-if="flag_1"
-                :userInfo="store.userInfo"
-                />
-                <MyArticles
-                v-if="flag_2"
-                />
-                <MyBankInfo
-                v-if="flag_3"
-                />
-            </div>
+              </div>
             </div>
           </div>
-        </div>
 
-      </div>
+        </div>
       <div>
         
       </div>
