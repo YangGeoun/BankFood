@@ -290,3 +290,79 @@ def test(request):
     serializer = FundSerializer(funds, many=True)
     return Response(serializer.data)
 
+banks_list = [
+  "경남은행", "광주은행", "국민은행", "농협은행주식회사", "대구은행", "부산은행", "수협은행",
+  "신한은행", "우리은행", "전북은행", "제주은행", "주식회사카카오뱅크", "주식회사케이뱅크", 
+  "중소기업은행", "토스뱅크주식회사", "하나은행", "한국산업은행", "한국스탠다드차타드은행" 
+]
+
+@api_view(['GET'])
+def search_deposit(request,bank,type,term):
+    print(bank)
+    print(type)
+    print(term)
+    deposits = []
+    for i in range(len(bank)):
+        if bank[i] == '1':
+            for el in Deposit.objects.filter(kor_co_nm=banks_list[i]):
+                if term != '0':
+                    for option in  el.depositoption_set.all():
+                        if option.save_trm == term:
+                            if type == '0':
+                                deposits.append(el)
+                            elif type == '1':
+                                if option.intr_rate_type_nm == '단리':
+                                    deposits.append(el)
+                            elif type == '2':
+                                if option.intr_rate_type_nm == '복리':
+                                    deposits.append(el)
+                else:
+                    if type == '0':
+                        deposits.append(el)
+                    elif type == '1':
+                        if el.depositoption_set.all()[0].intr_rate_type_nm == '단리':
+                            deposits.append(el)
+                    elif type == '2':
+                        if el.depositoption_set.all()[0].intr_rate_type_nm == '복리':
+                            deposits.append(el)
+    serializer = DepositSerializer(deposits,many=True)
+    
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def search_saving(request,bank,type,term):
+    saving = []
+    for i in range(len(bank)):
+        if bank[i] == '1':
+            for el in Saving.objects.filter(kor_co_nm=banks_list[i]):
+                if term != '0':
+                    for option in  el.savingoption_set.all():
+                        if option.save_trm == term:
+                            if type == '0':
+                                saving.append(el)
+                            elif type == '1':
+                                if option.intr_rate_type_nm == '단리':
+                                    saving.append(el)
+                            elif type == '2':
+                                if option.intr_rate_type_nm == '복리':
+                                    saving.append(el)
+                else:
+                    if type == '0':
+                        saving.append(el)
+                    elif type == '1':
+                        if el.savingoption_set.all()[0].intr_rate_type_nm == '단리':
+                            saving.append(el)
+                    elif type == '2':
+                        if el.depositoption_set.all()[0].intr_rate_type_nm == '복리':
+                            saving.append(el)
+    serializer = SavingSerializer(saving,many=True)
+    
+    return Response(serializer.data)
+
+
+
+
+
+
+

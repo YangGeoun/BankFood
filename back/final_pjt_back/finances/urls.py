@@ -11,4 +11,7 @@ urlpatterns = [
     path('card/', views.getcard),
     path('fund/', views.getfund),
     path('test/', views.test),
+    path('searchdeposit/<bank>/<type>/<term>/', views.search_deposit),
+    path('searchsaving/<bank>/<type>/<term>/', views.search_saving),
+
 ]
