@@ -7,12 +7,13 @@
             <div class="nav-item dropdown">
               <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
               style="font-size: 20px; width:200px"
+              @click="router.push({name:'compare'})"
               >
                 예금/적금 조회하기
               </a>
-              <ul class="dropdown-menu" id="deposit_list" style="margin-top: 10px;">
+              <!-- <ul class="dropdown-menu" id="deposit_list" style="margin-top: 10px;">
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
-              </ul>
+              </ul> -->
             </div>
 
             <div class="nav-item dropdown">

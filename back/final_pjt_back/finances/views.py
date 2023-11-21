@@ -289,3 +289,4 @@ def test(request):
         cards = cards.filter(medical__isnull=True)
     serializer = FundSerializer(funds, many=True)
     return Response(serializer.data)
+
