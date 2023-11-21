@@ -7,15 +7,15 @@ class CustomUserManager(UserManager):
     pass
 
 class User(AbstractUser):
-    username = models.CharField(max_length=30) 
-    nickname = models.CharField(max_length=255, unique=True)
+    username = models.CharField(max_length=254, unique=True) 
+    nickname = models.CharField(max_length=254)
     email = models.EmailField(max_length=254, blank=True, null=True)
     age = models.IntegerField()
     salary = models.IntegerField(blank=True, null=True)
     money = models.FloatField(blank=True, null=True)
     gender = models.BooleanField()
     address = models.TextField(blank=True, null=True)
-    USERNAME_FIELD = 'nickname'
+    USERNAME_FIELD = 'username'
     # superuser fields
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
