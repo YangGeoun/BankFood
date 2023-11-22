@@ -21,8 +21,28 @@ def signup(request):
 
 @api_view(['GET', 'PUT'])
 def userinfo(request):
-    serializer = UserSerializer(request.user)
-    return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        data = request.data
+        if data.get('key') =='username':
+            request.user.username = data.get('value')
+        elif data.get('key') =='age':
+            request.user.age = data.get('value')
+        elif data.get('key') =='nickname':
+            request.user.nickname = data.get('value')
+        elif data.get('key') =='salary':
+            request.user.salary = data.get('value')
+        elif data.get('key') =='email':
+            request.user.email = data.get('value')
+        elif data.get('key') =='money':
+            request.user.money = data.get('value')
+        elif data.get('key') =='address':
+            request.user.address = data.get('value')
+        request.user.save()
+        return Response(status=status.HTTP_200_OK)
+
 
 
 
