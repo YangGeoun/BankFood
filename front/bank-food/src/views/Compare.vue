@@ -2,9 +2,14 @@
   <div :style="maxWidth" class="mt-3 px-5 py-3 mx-auto" style="background-color: white; border-radius: 10px;">
     <h2 class="fw-bold">예적금상품금리비교</h2>
     <div class="row text-center">
-      <hr>
-      <h4 class="col-6 fw-bold mb-3">예금금리</h4>
-      <h4 class="col-6 fw-bold">적금금리</h4>
+      <hr style="margin-bottom: 0;">
+      <div class="col-6" @click="toggleDeposit" :class="{'bg':isDeposit}" style="padding-top: 15px;">
+        <h4 class=" fw-bold mb-3">예금금리</h4>
+      </div>
+      <div class="col-6" @click="toggleDeposit" :class="{'bg':!isDeposit}" style="padding-top: 15px;">
+        <h4 class=" fw-bold">적금금리</h4>
+      </div>
+      
       <hr>
       <div class="col-12 text-start mb-1" @click="allCheck">
         <input type="checkbox" id="all" value="true" :checked="is_all" >
@@ -45,7 +50,7 @@
     
   </div>
   <div :style="maxWidth" class="px-5 py-3 mx-auto" style="background-color: white; margin-top: 20px; border-radius: 10px;">
-  <table class="table table-striped table-hover">
+  <table class="table table-hover">
     <thead>
       <tr>
         <th>공시 제출월</th>
@@ -59,9 +64,10 @@
     </thead>
     <tbody>
       <DepositItem 
-      v-for="deposit in deposits"
+      v-for="(deposit, index) in deposits"
       :key="deposit"
       :deposit=deposit
+      :index=index
       />
     </tbody>
   </table>
@@ -94,6 +100,16 @@ let is_all = computed(() => {
   return (checked.value.length==banks.length)
 })
 
+const isDeposit = ref(true)
+
+const toggleDeposit = function () {
+  if (isDeposit.value) {
+    isDeposit.value = false
+  } else {
+    isDeposit.value = true
+  }
+}
+
 const allCheck = function () {
   if (is_all === true) {
     checked.value = []
@@ -111,7 +127,7 @@ const maxWidth = ref({
 onMounted(()=>{
   axios({
     method:'get',
-    url: `${store.ServerURL}/finances/deposit/`,
+    url: `${store.ServerURL}finances/deposit/`,
   })
   .then((res) => {
     console.log(res)
@@ -121,21 +137,40 @@ onMounted(()=>{
     console.log(err)
   })
 })
+
 const search = function () {
-  axios({
-    method:'get',
-    url: `${store.ServerURL}/finances/searchdeposit/${banks.map((el)=> checked.value.includes(el)? '1' : '0').join('')}/${type.value}/${term.value}/`,
-  })
-  .then((res) => {
-    console.log(res)
-    deposits.value = res.data
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+  if (isDeposit) {
+    axios({
+      method:'get',
+      url: `${store.ServerURL}finances/searchdeposit/${banks.map((el)=> checked.value.includes(el)? '1' : '0').join('')}/${type.value}/${term.value}/`,
+    })
+    .then((res) => {
+      console.log(res)
+      deposits.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  } 
+  else{
+    axios({
+      method:'get',
+      url: `${store.ServerURL}finances/searchsaving/${banks.map((el)=> checked.value.includes(el)? '1' : '0').join('')}/${type.value}/${term.value}/`,
+    })
+    .then((res) => {
+      console.log(res)
+      deposits.value = res.data
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 }
 </script>
 
 <style scoped>
-
+  .bg {
+    background-color: #80EAFF;
+    color: white;
+  }
 </style>

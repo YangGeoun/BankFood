@@ -1,9 +1,23 @@
 <template>
   <tr @click="goDetail">
-    <td>{{ deposit.dcls_month }}</td>
-    <td>{{ deposit.kor_co_nm }}</td>
-    <td>{{ deposit.fin_prdt_nm }}</td>
-    <td v-for="opt in opts">{{ opt }}</td>
+    <td :class="{'gray':index%2==0}">{{ deposit.dcls_month }}</td>
+    <td :class="{'gray':index%2==0}">{{ deposit.kor_co_nm }}</td>
+    <td :class="{'gray':index%2==0}">{{ deposit.fin_prdt_nm }}</td>
+    <td :class="{'gray':index%2==0}" v-for="opt in opts">{{ opt }}</td>
+  </tr>
+  <tr v-if="showDetail">
+    <td colspan="7">
+      <div class="px-5 py-3" style="background-color: #f1f3f8; border-radius: 5px;">
+        <p>저축 금리 유형명 : {{deposit.depositoption_set[0].intr_rate_type_nm}}</p>
+        <p>최대 한도 : {{ deposit.max_limit }}</p>
+        <p>가입 방법 : {{ deposit.join_way }}</p>
+        <p>가입 제한 : {{ deposit.join_deny }}</p>
+        <p>우대 조건 : {{ deposit.spcl_cnd }}</p>
+        <p>기타 유의사항 : {{ deposit.etc_note }}</p>
+        <button class="btn btn-info fw-bold" style="width: 100px; color: white;" @click="join"> 상품 가입 </button>
+      </div>
+    </td>
+    
   </tr>
 </template>
 
@@ -11,16 +25,44 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink,useRouter } from 'vue-router'
+import { useCounterStore } from '../stores/counter';
+import axios from 'axios';
 
+const store = useCounterStore()
 const router = useRouter()
+const showDetail = ref(false)
 // console.log(router)
 const goDetail = function(){
-  router.push({name:'depositdetailView',params:{id:props.deposit.id}})
+  if (showDetail.value) {
+    showDetail.value = false
+  } else {
+    showDetail.value =true
+  }
 }
 
 const props = defineProps({
-  deposit:Object
+  deposit:Object,
+  index:Number
 })
+
+const join = function () {
+  axios({
+    url : `${store.ServerURL}finances/deposit/join/`,
+    data : {
+      'fin_prdt_nm':props.deposit.fin_prdt_nm,
+    },
+    method : 'POST',
+    headers : {
+      Authorization:`Token ${store.token}`
+    }
+  })
+  .then ((res)=>{
+    console.log(res)
+  })
+  .catch ((err)=>{
+    console.log(err)
+  })
+}
 
 const opts = ref(['-','-','-','-'])
 for ( const opt of props.deposit.depositoption_set) {
@@ -41,5 +83,7 @@ for ( const opt of props.deposit.depositoption_set) {
 </script>
 
 <style scoped> 
-
+  .gray {
+    background-color: rgb(245, 245, 245);
+  }
 </style>

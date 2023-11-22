@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import get_list_or_404, get_object_or_404
@@ -361,8 +362,18 @@ def search_saving(request,bank,type,term):
     return Response(serializer.data)
 
 
+@api_view(['POST'])
+def saving_join(request):
+    saving = Saving.objects.filter(fin_prdt_nm=request.data.get('fin_prdt_nm'))
+    saving[0].user.add(request.user)
+    return Response(status=status.HTTP_200_OK)
 
 
+@api_view(['POST'])
+def deposit_join(request):
+    deposit = Deposit.objects.filter(fin_prdt_nm=request.data.get('fin_prdt_nm'))
+    deposit[0].user.add(request.user)
+    return Response(status=status.HTTP_200_OK)
 
 
 
