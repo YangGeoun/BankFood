@@ -1,6 +1,7 @@
 import random
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -8,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthentic
 from .form import CostomUserCreationForm
 from .serializer import UserSerializer
 from finances.models import Deposit, Saving
+from finances.serializer import DepositSerializer, SavingSerializer
 
 # Create your views here.
 @api_view(['POST'])
@@ -47,6 +49,22 @@ def userinfo(request):
         return Response({'res':'성공'},status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+def user_products(request):
+    d_list = []
+    s_list = []
+    user = request.user
+    deposits = user.deposit_set.all()
+    savings = user.saving_set.all()
+    for el in deposits:
+        d_list.append(DepositSerializer(el).data)
+    for el in savings:
+        s_list.append(SavingSerializer(el).data)
+
+    return Response([d_list,s_list])
+
+
+
 
 
 
@@ -56,6 +74,7 @@ def userinfo(request):
 
 
 #---------------------------------------------------------------------------------------#
+
 
 first_name_samples = "김이박최정강조윤장임양부"
 middle_name_samples = "민서예지도하주윤채현지건수"

@@ -7,12 +7,48 @@ from selenium.webdriver.common.by import By
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.shortcuts import get_list_or_404, get_object_or_404
 from django.conf import settings
+from django.shortcuts import get_list_or_404, get_object_or_404
+from django.contrib.auth import get_user_model
 from .models import Deposit, DepositOption, Saving, SavingOption, Card, Fund
 from .serializer import DepositSerializer, SavingSerializer, CardSerializer, FundSerializer
 
 # Create your views here.
+
+import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import CountVectorizer
+
+@api_view(['GET'])
+def aaa(requser):
+    User = get_user_model()
+    dic = {}
+    num = 0
+    df = pd.DataFrame(
+    list(
+        User.objects.all().values(
+            'id','age','salary', 'money','gender','address'
+        )
+    )
+    )
+    print(df)
+    count_vector = CountVectorizer(ngram_range=(1,3))
+    c_vector_adress = count_vector.fit_transform(df['address'])
+
+    for i in range(len(df['address'])):
+        if not df['address'][i] in dic:
+            dic[df['address'][i]] = num
+            num += 1
+        df['address'][i] = dic[df['address'][i]]
+    normalization_df = (df - df.min())/(df.max() - df.min())
+    user_sim = cosine_similarity(normalization_df, normalization_df)
+    user_sim_df = pd.DataFrame(user_sim, index=normalization_df.id, columns=normalization_df.id)
+    print(user_sim_df)
+    return Response({'ad':'asd'})
+
+
+
+
 
 join_deny_dic = { '1' : '제한없음', '2' : '서민전용', '3': '일부제한'}
 benefits_dic = {
