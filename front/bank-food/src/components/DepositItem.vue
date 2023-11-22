@@ -1,5 +1,5 @@
 <template>
-  <tr @click="goDetail">
+  <tr @click="goDetail" style="cursor: pointer;">
     <td :class="{'gray':index%2==0}">{{ deposit.dcls_month }}</td>
     <td :class="{'gray':index%2==0}">{{ deposit.kor_co_nm }}</td>
     <td :class="{'gray':index%2==0}">{{ deposit.fin_prdt_nm }}</td>
@@ -27,6 +27,7 @@ import { ref } from 'vue'
 import { RouterLink,useRouter } from 'vue-router'
 import { useCounterStore } from '../stores/counter';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const store = useCounterStore()
 const router = useRouter()
@@ -57,7 +58,12 @@ const join = function () {
     }
   })
   .then ((res)=>{
-    console.log(res)
+    Swal.fire({
+          icon: "success",
+          title: `해당 상품에 가입 완료했습니다..`,
+          showConfirmButton: false,
+          timer: 1500
+          });
   })
   .catch ((err)=>{
     console.log(err)
