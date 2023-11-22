@@ -58,6 +58,9 @@ const clickEvent = function(){
   else if (props.item==1){
     router.push({name:'compare'})
   }
+  else if(props.item ==4){
+    router.push({name:'article'})
+  }
   }
 const calcCloseModal = function(){
   const calcModal = document.getElementById("calc-modal");

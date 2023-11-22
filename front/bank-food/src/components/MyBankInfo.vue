@@ -22,14 +22,14 @@
       >
         <thead>
           <tr>
-            <th scope="cols">타이틀</th>
-            <th scope="cols">내용</th>
+            <th scope="cols">은행</th>
+            <th scope="cols">상품명</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in articleList">
-            <th scope="row">{{item.title}}</th>
-            <td>{{item.content}}</td>
+            <th scope="row">{{item.kor_co_nm}}</th>
+            <td style="font-weight: bold;">{{item.fin_prdt_nm}}</td>
           </tr>
         </tbody>
     </table>
@@ -58,20 +58,21 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import axios from 'axios';
+import { ref, computed, onMounted } from 'vue';
+import {useCounterStore} from '@/stores/counter';
 
+const store = useCounterStore()
 const flipAnimate = ref({
   "animate__bounce" : true,
   "animate__animated" : true,
 })
 const articlesPerPage = 7;
-const article = ref([
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  
-])
+const article = ref([])
 const nowPage = ref(1)
-const endPage = Math.ceil(article.value.length/articlesPerPage)
+const endPage = computed(()=>{
+  return Math.ceil(article.value.length/articlesPerPage)
+})
 const timeFunc = function(){
   flipAnimate.value.animate__bounce = false
   flipAnimate.value.animate__animated = false
@@ -82,7 +83,7 @@ const timeFunc = function(){
       },10)
 }
 const nextPage = function(){
-  if(nowPage.value<endPage){
+  if(nowPage.value<endPage.value){
     nowPage.value+=1
   }
 }
@@ -105,6 +106,25 @@ const endPoint = computed(()=>{
 })
 const articleList = computed(()=>{
   return article.value.slice(startPoint.value,endPoint.value)
+})
+
+onMounted(()=>{
+  axios({
+    url: 'http://127.0.0.1:8000/accounts/userproducts/',
+    method : 'get',
+    headers : {
+      Authorization : `Token ${store.token}`
+    }
+  })
+  .then(res =>{
+    store.userBank = res.data
+    article.value = store.userBank
+
+  })
+  .catch(err =>{
+    console.log(err)
+  })
+
 })
 
 </script>

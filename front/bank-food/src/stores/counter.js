@@ -5,6 +5,7 @@ import axios from 'axios'
 export const useCounterStore = defineStore('counter', () => {
   // 로그인 처리
   const userInfo = ref({})
+  const userBank = ref([])
   const token = ref(null)
   const quest = ref('구미')
   const mapType = ref(1)
@@ -69,9 +70,8 @@ export const useCounterStore = defineStore('counter', () => {
     })
     .then(res=>{
       exchange.value = res.data
-      console.log(exchange.value)
     })
   }
 
-  return {userInfo ,token, ServerURL, youtube, news, quest, mapType,exchange,getDjangoExchange,getExchange ,getDjangoYoutube, getYoutube, getDjangoNews, getNews, changeQuest,  }
+  return {userBank, userInfo ,token, ServerURL, youtube, news, quest, mapType,exchange,getDjangoExchange,getExchange ,getDjangoYoutube, getYoutube, getDjangoNews, getNews, changeQuest,  }
 },{persist : true})

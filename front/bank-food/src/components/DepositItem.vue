@@ -47,7 +47,17 @@ const props = defineProps({
 })
 
 const join = function () {
-  axios({
+  Swal.fire({
+  title: "Are you sure?",
+  text: "해당 상품에 가입하시겠습니까?",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes !!"
+}).then((result) => {
+  if (result.isConfirmed) {
+    axios({
     url : `${store.ServerURL}finances/deposit/join/`,
     data : {
       'fin_prdt_nm':props.deposit.fin_prdt_nm,
@@ -68,6 +78,9 @@ const join = function () {
   .catch ((err)=>{
     console.log(err)
   })
+  }
+});
+
 }
 
 const opts = ref(['-','-','-','-'])

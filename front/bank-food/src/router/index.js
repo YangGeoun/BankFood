@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import MapView from '../views/MapView.vue'
 import MyPage from '../views/MyPage.vue'
 import Compare from '../views/Compare.vue'
+import Article from '../views/Article.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,7 +27,12 @@ const router = createRouter({
       path: '/compare',
       name: 'compare',
       component : Compare,
-    }
+    },
+    {
+      path: '/articles',
+      name: 'article',
+      component : Article,
+    },
     
   ]
 })

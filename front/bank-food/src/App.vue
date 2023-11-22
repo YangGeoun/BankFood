@@ -5,7 +5,7 @@
         @click="router.push({name:'home'})"
         >
             <div class="nav-item dropdown">
-              <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+              <a class="nav-link dropdown" href="#" role="button"  aria-expanded="false"
               style="font-size: 20px; width:200px"
               @click="router.push({name:'compare'})"
               >
@@ -27,7 +27,7 @@
             </div>
 
             <div class="nav-item dropdown">
-              <a class="nav-link dropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+              <a class="nav-link dropdown" href="#" role="button"  aria-expanded="false"
               style="font-size: 20px; margin-left: 10%; width: 180px; margin-bottom: 0;"
               @click="router.push({name:'map'})"
               >
@@ -39,6 +39,7 @@
             <div class="nav-item dropdown">
               <a class="nav-link " href="#" role="button" aria-expanded="false"
               style="font-size: 20px; margin-left: 10%; width: 100px;"
+              @click="router.push({name:'article'})"
               >
                 소통창구
               </a>
@@ -175,6 +176,7 @@ const logout = function(){
     res=>{
     store.token = null
     store.userInfo = {}
+    store.userBank = []
   }
   )
   .catch(err=>{
