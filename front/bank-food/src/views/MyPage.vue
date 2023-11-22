@@ -83,11 +83,12 @@
 
 <script setup>
 import { useCounterStore } from '../stores/counter';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import MyInfo from '../components/MyInfo.vue'
 import MyArticles from '../components/MyArticles.vue'
 import MyBankInfo from '../components/MyBankInfo.vue'
-
+import axios from 'axios';
+import Swal from 'sweetalert2';
 const store = useCounterStore()
 const warningBody = ref({
   height : `${(screen.availHeight/12)*10}px`,
@@ -100,6 +101,10 @@ const pageBody = ref({
 const flag_1 = ref(true)
 const flag_2 = ref(false)
 const flag_3 = ref(false)
+
+
+
+
 
 </script>
 

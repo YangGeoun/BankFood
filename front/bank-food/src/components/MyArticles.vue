@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="animate__animated animate__fadeIn">
     
-    <div class="d-flex justify-content-center " style="margin-top: 10px;">
+    <div class="d-flex justify-content-center " style="margin-top: 10px;
+    
+    ">
       <img src="@/assets/MYARTICLE.png" alt="" style="height: 200px; width: 200px;">
       <!-- <a href="https://www.flaticon.com/free-icons/article" title="article icons">Article icons created by Vectorslab - Flaticon</a> -->
     </div>

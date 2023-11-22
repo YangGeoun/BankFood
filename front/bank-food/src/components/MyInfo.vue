@@ -1,11 +1,19 @@
 <template>
-  <div>
+  <div class="animate__animated animate__fadeIn">
     
-    <div class="d-flex justify-content-center " style="margin-top: 30px;">
-      <img src="@/assets/MAN.png" alt="" v-if="!store.userInfo.gender" style="height: 200px; width: 200px;">
-      <img src="@/assets/WOMAN.png" alt="" v-if="store.userInfo.gender" style="height: 200px; width: 200px;">
+    <div class="d-flex justify-content-center " style="margin-top: 30px;
+    height: 100%; margin-top: 0;
+    "
+    >
+      <img src="@/assets/MAN.png" alt="" v-if="!store.userInfo.gender" style="height: 200px; width: 200px;
+      margin-top: 15px; margin-bottom: 15px;
+      ">
+      <img src="@/assets/WOMAN.png" alt="" v-if="store.userInfo.gender" style="height: 200px; width: 200px;
+      margin-top: 15px; margin-bottom: 15px;
+      ">
     </div>
-    <hr>
+    <hr style="margin-top: 0;">
+
     <h4 style="margin-left: 40px; font-weight: 550; color: darkslategray; margin-bottom: 25px;"
       >Basic Information</h4>
     <div class="d-flex flex-column" >
@@ -17,11 +25,11 @@
             > 
               <label for="username" style="margin-left: 10px;">아이디 : </label>
               <div>
-              <input type="text" id="username" v-model="id"
+              <input type="text" id="username" v-model="id" disabled
               style="margin-right: 10px;"
               >
-              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;"
-              @click="changeInfo('username',id)"
+              <img src="@/assets/LOCK.png" alt="" style="width: 20px; height: 20px; margin-right: 10px;"
+              
               >
               <!-- <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons">Pencil icons created by riajulislam - Flaticon</a> -->
               </div>
@@ -162,6 +170,8 @@
 import { useCounterStore } from '../stores/counter';
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 
 const store = useCounterStore()
 const metAt = ref('')
@@ -189,11 +199,24 @@ const changeInfo = function(key, value){
       Authorization : `Token ${store.token}`
     }
   })
-  .then(
-    res=>{
-      console.log('성공')
-    }
-  )
+  .then(userInfo =>{
+    axios({
+        method: 'get',
+        url : `http://127.0.0.1:8000/accounts/userinfo/`,
+        headers : {
+          Authorization : `Token ${store.token}`
+        }
+      })
+      .then(userInfo =>{
+        store.userInfo =  userInfo.data
+        Swal.fire({
+          icon: "success",
+          title: `수정 완료했습니다.`,
+          showConfirmButton: false,
+          timer: 1500
+          });
+      })
+      })
   .catch(
     err=>{
       console.log(err)

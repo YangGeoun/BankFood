@@ -3,21 +3,21 @@
     <h2 class="fw-bold">예적금상품금리비교</h2>
     <div class="row text-center">
       <hr style="margin-bottom: 0;">
-      <div class="col-6" @click="toggleDeposit" :class="{'bg':isDeposit}" style="padding-top: 15px;">
+      <div class="col-6" @click="toggleDeposit" :class="{'bg':isDeposit}" style="padding-top: 15px; cursor: pointer;">
         <h4 class=" fw-bold mb-3">예금금리</h4>
       </div>
-      <div class="col-6" @click="toggleDeposit" :class="{'bg':!isDeposit}" style="padding-top: 15px;">
+      <div class="col-6" @click="toggleDeposit" :class="{'bg':!isDeposit}" style="padding-top: 15px; cursor: pointer;">
         <h4 class=" fw-bold">적금금리</h4>
       </div>
       
       <hr>
       <div class="col-12 text-start mb-1" @click="allCheck">
         <input type="checkbox" id="all" value="true" :checked="is_all" >
-        <label for="all">전체</label>
+        <label for="all" style="margin-left: 5px;">전체</label>
       </div>
       <div class="col-2 text-start mb-1" v-for="bank in banks">
         <input type="checkbox" :id="bank" :value="bank" v-model="checked" >
-        <label :for="bank">{{bank}}</label>
+        <label :for="bank" style="margin-left: 5px;">{{bank}}</label>
       </div>
       <hr class="mt-1">
       <ul class="d-flex justify-content-around">
