@@ -51,17 +51,16 @@ def userinfo(request):
 
 @api_view(['GET'])
 def user_products(request):
-    d_list = []
-    s_list = []
+    data = []
     user = request.user
     deposits = user.deposit_set.all()
     savings = user.saving_set.all()
     for el in deposits:
-        d_list.append(DepositSerializer(el).data)
+        data.append(DepositSerializer(el).data)
     for el in savings:
-        s_list.append(SavingSerializer(el).data)
+        data.append(SavingSerializer(el).data)
 
-    return Response([d_list,s_list])
+    return Response(data)
 
 
 
