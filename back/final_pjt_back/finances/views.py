@@ -22,28 +22,20 @@ from sklearn.feature_extraction.text import CountVectorizer
 @api_view(['GET'])
 def aaa(requser):
     User = get_user_model()
-    dic = {}
-    num = 0
+    
     df = pd.DataFrame(
     list(
         User.objects.all().values(
-            'id','age','salary', 'money','gender','address'
+            'id','age','salary', 'money','gender'
         )
     )
     )
-    print(df)
-    count_vector = CountVectorizer(ngram_range=(1,3))
-    c_vector_adress = count_vector.fit_transform(df['address'])
-
-    for i in range(len(df['address'])):
-        if not df['address'][i] in dic:
-            dic[df['address'][i]] = num
-            num += 1
-        df['address'][i] = dic[df['address'][i]]
+   
     normalization_df = (df - df.min())/(df.max() - df.min())
     user_sim = cosine_similarity(normalization_df, normalization_df)
     user_sim_df = pd.DataFrame(user_sim, index=normalization_df.id, columns=normalization_df.id)
     print(user_sim_df)
+    print(df['gender'])
     return Response({'ad':'asd'})
 
 

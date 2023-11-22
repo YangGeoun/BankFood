@@ -7,9 +7,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from .form import CostomUserCreationForm
-from .serializer import UserSerializer
+from .serializer import UserSerializer, ArticleUserSerializer
+from articles. models import Article
 from finances.models import Deposit, Saving
 from finances.serializer import DepositSerializer, SavingSerializer
+from articles.serializer import ArticleSerializer
 
 # Create your views here.
 @api_view(['POST'])
@@ -20,6 +22,15 @@ def signup(request):
         form.save()
         return Response(status=status.HTTP_201_CREATED)
     return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def article_userinfo(request, article_pk):
+    article = Article.objects.get(pk=article_pk)
+    user = article.author
+    serializer = ArticleUserSerializer(user)
+    return Response(serializer.data)
+
 
 @permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(['GET', 'POST'])
@@ -59,9 +70,17 @@ def user_products(request):
         data.append(DepositSerializer(el).data)
     for el in savings:
         data.append(SavingSerializer(el).data)
-
     return Response(data)
 
+
+@api_view(['GET'])
+def user_articles(request):
+    data = []
+    user = request.user
+    articles = user.article_set.all()
+    for el in articles:
+        data.append(ArticleSerializer(el).data)
+    return Response(data)
 
 
 

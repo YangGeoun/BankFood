@@ -1,10 +1,12 @@
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from .models import Article, Comment
 from .serializer import ArticleSerializer, CommentSerializer
+from finances.serializer import DepositSerializer, SavingSerializer
 
 # Create your views here.
 @api_view(['GET','POST'])
@@ -21,13 +23,26 @@ def index(request):
                 return Response(serializer.data , status=status.HTTP_201_CREATED)
 
     
+
+
+    
 @api_view(['GET','PUT','DELETE'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def detail(request,pk):
     article = get_object_or_404(Article,pk=pk)
     if request.method == 'GET':
         serializer = ArticleSerializer(article)
-        return Response(serializer.data)
+        username = article.author
+        user = get_user_model().objects.get(username='dirjsdn2365')
+        data = [serializer.data]
+        product_list = []
+        print(user.deposit_set.all())
+        for el in user.deposit_set.all():
+            product_list.append(DepositSerializer(el).data)
+        for el in user.saving_set.all():
+            product_list.append(SavingSerializer(el).data)
+            
+        return Response([data,product_list])
     elif request.method == 'PUT':
         if request.user == article.author:
             serializer = ArticleSerializer(article,data=request.data)
