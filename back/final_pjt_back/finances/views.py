@@ -383,7 +383,7 @@ def search_saving(request,bank,type,term):
                         if el.savingoption_set.all()[0].intr_rate_type_nm == '단리':
                             saving.append(el)
                     elif type == '2':
-                        if el.depositoption_set.all()[0].intr_rate_type_nm == '복리':
+                        if el.savingoption_set.all()[0].intr_rate_type_nm == '복리':
                             saving.append(el)
     serializer = SavingSerializer(saving,many=True)
     

@@ -68,6 +68,7 @@
       :key="deposit"
       :deposit=deposit
       :index=index
+      :isDeposit="isDeposit"
       />
     </tbody>
   </table>
@@ -139,7 +140,7 @@ onMounted(()=>{
 })
 
 const search = function () {
-  if (isDeposit) {
+  if (isDeposit.value) {
     axios({
       method:'get',
       url: `${store.ServerURL}finances/searchdeposit/${banks.map((el)=> checked.value.includes(el)? '1' : '0').join('')}/${type.value}/${term.value}/`,
