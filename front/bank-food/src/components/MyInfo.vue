@@ -17,10 +17,12 @@
             > 
               <label for="username" style="margin-left: 10px;">아이디 : </label>
               <div>
-              <input type="text" id="username" :value="store.userInfo.username"
+              <input type="text" id="username" v-model="id"
               style="margin-right: 10px;"
               >
-              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;"
+              @click="changeInfo('username',id)"
+              >
               <!-- <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons">Pencil icons created by riajulislam - Flaticon</a> -->
               </div>
               
@@ -31,10 +33,12 @@
             > 
               <label for="nickname" style="margin-left: 10px;">이름 : </label>
               <div>
-              <input type="text" id="nickname" :value="store.userInfo.nickname"
+              <input type="text" id="nickname" v-model="name"
               style="margin-right: 10px;"
               >
-              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;"
+              @click="changeInfo('nickname',name)"
+              >
               <!-- <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons">Pencil icons created by riajulislam - Flaticon</a> -->
               </div>
               
@@ -45,10 +49,12 @@
             > 
               <label for="age" style="margin-left: 10px;">나이 : </label>
               <div>
-              <input type="text" id="age" :value="store.userInfo.age"
+              <input type="number" id="age" v-model="age"
               style="margin-right: 10px;"
               >
-              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;"
+              @click="changeInfo('age',age)"
+              >
               <!-- <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons">Pencil icons created by riajulislam - Flaticon</a> -->
               </div>  
             </div>
@@ -71,10 +77,12 @@
             > 
               <label for="E-MAIL" style="margin-left: 10px;">이메일 : </label>
               <div>
-              <input type="text" id="E-MAIL" :value="store.userInfo.email"
+              <input type="text" id="E-MAIL" v-model="email"
               style="margin-right: 10px;"
               >
-              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;"
+              @click="changeInfo('email',email)"
+              >
               <!-- <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons">Pencil icons created by riajulislam - Flaticon</a> -->
               </div>
             </div>
@@ -101,10 +109,12 @@
             > 
               <label for="SALARY" style="margin-left: 10px;">월 수입 : </label>
               <div>
-              <input type="text" id="SALARY" :value="store.userInfo.salary"
+              <input type="number" id="SALARY" v-model="salary"
               style="margin-right: 10px;"
               >
-              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;"
+              @click="changeInfo('salary',salary)"
+              >
               <!-- <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons">Pencil icons created by riajulislam - Flaticon</a> -->
               </div>
           </div>
@@ -114,10 +124,12 @@
             > 
               <label for="money" style="margin-left: 10px;">자산 : </label>
               <div>
-              <input type="text" id="money" :value="store.userInfo.money"
+              <input type="number" id="money" v-model="money"
               style="margin-right: 10px;"
               >
-              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;"
+              @click="changeInfo('money',money)"
+              >
               <!-- <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons">Pencil icons created by riajulislam - Flaticon</a> -->
               </div>
               
@@ -127,10 +139,12 @@
             > 
               <label for="address" style="margin-left: 10px;">주소지 :  </label>
               <div>
-              <input type="text" id="address" :value="store.userInfo.address"
+              <input type="text" id="address" v-model="address"
               style="margin-right: 10px;"
               >
-              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;">
+              <img src="@/assets/EDIT.png" alt="" style="width: 20px; height: 20px; cursor: pointer; margin-right: 10px;"
+              @click="changeInfo('address',address)"
+              >
               <!-- <a href="https://www.flaticon.com/free-icons/pencil" title="pencil icons">Pencil icons created by riajulislam - Flaticon</a> -->
               </div>
               
@@ -144,14 +158,49 @@
 </template>
 
 <script setup>
+
 import { useCounterStore } from '../stores/counter';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import axios from 'axios';
+
 const store = useCounterStore()
 const metAt = ref('')
+const id = ref(store.userInfo.username)
+const name = ref(store.userInfo.nickname)
+const age = ref(store.userInfo.age)
+const email = ref(store.userInfo.email)
+const salary = ref(store.userInfo.salary)
+const money = ref(store.userInfo.money)
+const address = ref(store.userInfo.address)
 for(let i = 0; i<10; i++){
   metAt.value += store.userInfo.date_joined[i]
 }
 const arrowflag = ref(true)
+const changeInfo = function(key, value){
+  axios({
+    method : 'put',
+    url : 'http://127.0.0.1:8000/accounts/userinfo/',
+    data : {
+      key : key,
+      value : value,
+      pk : store.userInfo.id
+    },
+    headers : {
+      'token' : `Token ${store.token}`
+    }
+  })
+  .then(
+    res=>{
+      console.log('성공')
+    }
+  )
+  .catch(
+    err=>{
+      console.log(err)
+    }
+
+  )
+}
 </script>
 
 <style scoped>

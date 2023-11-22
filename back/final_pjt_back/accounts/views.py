@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from .form import CostomUserCreationForm
 from .serializer import UserSerializer
 from finances.models import Deposit, Saving
@@ -18,30 +19,32 @@ def signup(request):
         return Response(status=status.HTTP_201_CREATED)
     return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+@permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(['GET', 'PUT'])
 def userinfo(request):
     if request.method == 'GET':
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
     elif request.method == 'PUT':
+        User = get_user_model()
+        user = User.objects.get(pk=request.data.get('id'))
         data = request.data
         if data.get('key') =='username':
-            request.user.username = data.get('value')
+            user.username = data.get('value')
         elif data.get('key') =='age':
-            request.user.age = data.get('value')
+            user.age = data.get('value')
         elif data.get('key') =='nickname':
-            request.user.nickname = data.get('value')
+            user.nickname = data.get('value')
         elif data.get('key') =='salary':
-            request.user.salary = data.get('value')
+            user.salary = data.get('value')
         elif data.get('key') =='email':
-            request.user.email = data.get('value')
+            user.email = data.get('value')
         elif data.get('key') =='money':
-            request.user.money = data.get('value')
+            user.money = data.get('value')
         elif data.get('key') =='address':
-            request.user.address = data.get('value')
-        request.user.save()
-        return Response(status=status.HTTP_200_OK)
+            user.address = data.get('value')
+        user.save()
+        return Response({'res':'성공'},status=status.HTTP_200_OK)
 
 
 
