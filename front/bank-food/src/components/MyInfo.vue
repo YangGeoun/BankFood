@@ -178,15 +178,15 @@ for(let i = 0; i<10; i++){
 const arrowflag = ref(true)
 const changeInfo = function(key, value){
   axios({
-    method : 'put',
+    method : 'post',
     url : 'http://127.0.0.1:8000/accounts/userinfo/',
     data : {
       key : key,
       value : value,
-      pk : store.userInfo.id
+      id : store.userInfo.id
     },
     headers : {
-      'token' : `Token ${store.token}`
+      Authorization : `Token ${store.token}`
     }
   })
   .then(

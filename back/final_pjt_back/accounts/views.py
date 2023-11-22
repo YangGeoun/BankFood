@@ -20,12 +20,12 @@ def signup(request):
     return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @permission_classes([IsAuthenticatedOrReadOnly])
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'POST'])
 def userinfo(request):
     if request.method == 'GET':
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
-    elif request.method == 'PUT':
+    elif request.method == 'POST':
         User = get_user_model()
         user = User.objects.get(pk=request.data.get('id'))
         data = request.data
