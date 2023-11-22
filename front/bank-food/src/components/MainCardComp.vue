@@ -46,6 +46,7 @@ const name = ref('')
 const background = ref('')
 const URL = ref('')
 const animate = ref([])
+
 const clickEvent = function(){
   if(props.item==2){ 
     const calcModal = document.getElementById("calc-modal");
@@ -53,6 +54,9 @@ const clickEvent = function(){
     }
   else if(props.item==3){
     router.push({name:'map'})
+  }
+  else if (props.item==1){
+    router.push({name:'compare'})
   }
   }
 const calcCloseModal = function(){
