@@ -53,12 +53,21 @@
 
       >
     </div>
+    <hr>
+    <div>
+      <Chart 
+      :data1="[4,2,3,2]"
+      :data2="[5,3,4,3]"
+      :name="['a','b','c','d']"
+      />
+    </div>
   </div>
   
 </template>
 
 <script setup>
 import axios from 'axios';
+import Chart from './Chart.vue';
 import { ref, computed, onMounted } from 'vue';
 import {useCounterStore} from '@/stores/counter';
 
@@ -119,6 +128,7 @@ onMounted(()=>{
   .then(res =>{
     store.userBank = res.data
     article.value = store.userBank
+    console.log(res.data)
 
   })
   .catch(err =>{
