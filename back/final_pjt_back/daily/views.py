@@ -137,3 +137,58 @@ def index(request):
     indexs = Index.objects.all()
     serializer = IndexSerializer(indexs, many=True)
     return Response(serializer.data)
+
+type_dic = {
+    0 : '코스피',
+    1 : '코스닥',
+    2 : '나스닥',
+    3 : 'S&P500',
+}
+
+@api_view(['GET'])
+def getstock(request):
+    url_list = [
+        'https://kr.investing.com/indices/kospi',
+        'https://kr.investing.com/indices/kosdaq',
+        'https://kr.investing.com/indices/nq-100',
+        'https://kr.investing.com/indices/us-spx-500'
+    ]
+    for i in range(4):
+        response = requests.get(url_list[i]).text
+        soup = BeautifulSoup(response, "html.parser")
+        temp = (soup.select('#__next > div.desktop\:relative.desktop\:bg-background-default > div.relative.flex > div.pt-5.md\:pt-10.xl\:container.xl\:mx-auto.font-sans-v2.antialiased.text-\[\#232526\].grid.grid-cols-1.md\:grid-cols-\[1fr_72px\].lg\:grid-cols-\[1fr_420px\].px-4.sm\:px-6.md\:px-7.md\:gap-6.lg\:px-8.lg\:gap-8.flex-1 > div.min-w-0 > div.flex.flex-col.md\:flex-row.md\:gap-\[50px\] > div'))
+        
+        table = temp[0].select('tbody > tr')
+
+        for stockdata in table:
+            data = stockdata.get_text(separator='***').split('***')
+            stock = Stock()
+            stock.name = data[1]
+            stock.now_price = data[2]
+            stock.price_raise = data[3]
+            stock.price_raise_percent = data[4]
+            stock.is_raise = '급등'
+            stock.type = type_dic[i]
+            stock.save()
+        
+        
+        table = temp[1].select('tbody > tr')
+
+        for stockdata in table:
+            data = stockdata.get_text(separator='***').split('***')
+            stock = Stock()
+            stock.name = data[1]
+            stock.now_price = data[2]
+            stock.price_raise = data[3]
+            stock.price_raise_percent = data[4]
+            stock.is_raise = '급락'
+            stock.type = type_dic[i]
+            stock.save()
+
+    return Response([])
+
+@api_view(['GET'])
+def stock(request):
+    stocks = Stock.objects.all()
+    serializer = StockSerializer(stocks, many=True)
+    return Response(serializer.data)

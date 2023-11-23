@@ -30,9 +30,11 @@ class Exchange(models.Model):
 
 class Stock(models.Model):
     name = models.TextField()
+    type = models.TextField(blank=True, null=True)
     now_price = models.TextField()
     price_raise = models.TextField()
     price_raise_percent = models.TextField()
+    is_raise = models.TextField(blank=True, null=True)
     sichong = models.TextField(blank=True, null=True)
     trading_volume = models.TextField(blank=True, null=True)
 

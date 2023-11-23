@@ -10,5 +10,7 @@ urlpatterns = [
     path('exchange/', views.exchange),
     path('getindex/', views.getindex),
     path('index/', views.index),
+    path('getstock/', views.getstock),
+    path('stock/', views.stock),
     
 ]
