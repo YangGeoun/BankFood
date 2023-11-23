@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div class="sub_bg" style="margin-bottom: 80px;">
+  <div class="sub_bg" style="margin-bottom: 50px;">
     <h2 style="font-weight: bold; text-shadow: 1px 1px 2px black; ">소통 게시판 
       <span style="margin-top: 8px;">여러 상품에 대해 이야기 해보세요</span></h2>
   </div>
@@ -18,8 +18,9 @@
       </tr>  
     </thead>
     <tbody>
-      <ArticleItem v-for="article in articleList" :key="article"
+      <ArticleItem v-for="(article,idx) in articleList" :key="idx"
       :article="article"
+      :idx="idx"
       />
     </tbody>
   </table>
@@ -55,7 +56,7 @@
       </div>
     </div>
     <!-- 모달창 끝 -->
-    <div class="d-flex" style="margin-left: 388px; margin-top: 20px;">
+    <div class="d-flex justify-content-center" style="width: 100%; margin-top: 20px;">
       <img src="@/assets/PREV.png" alt="" style="width: 30px; cursor: pointer;"
         @click="()=>{prevPage()
         }">

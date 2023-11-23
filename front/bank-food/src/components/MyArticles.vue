@@ -14,8 +14,7 @@
     <div class="d-flex justify-content-center" style="margin-top: 20px;;">
       <table class="type09 " style="border: 1px solid skyblue;
       box-shadow: 0 0 5px darkblue;      
-      "
-      :class="flipAnimate"
+      " v-if="article.length>0"
       >
         <thead>
           <tr>
@@ -34,7 +33,7 @@
     <div class="d-flex justify-content-center" style="margin: 10px">
       <img src="@/assets/PREV.png" alt="" style="width: 30px; cursor: pointer;"
       @click="()=>{prevPage()
-      timeFunc()
+    
       
       }"
       >
@@ -44,7 +43,7 @@
       <img src="@/assets/NEXT.png" alt="" style="width: 30px; cursor: pointer;" 
       @click="()=>{nextPage()
       
-      timeFunc()
+      
 
       }"
 
@@ -55,42 +54,24 @@
 </template>z
 
 <script setup>
-import { ref, computed } from 'vue';
-
+import { storeToRefs } from 'pinia';
+import { ref, computed, onMounted } from 'vue';
+import { useCounterStore } from '../stores/counter';
+import axios from 'axios';
+const store = useCounterStore()
+console.log(store.userInfo)
 const flipAnimate = ref({
   "animate__bounce" : true,
   "animate__animated" : true,
 })
 const articlesPerPage = 7;
+
 const article = ref([
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목2', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목5', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
-  {title : '제목', content : '내용'},
+
 ])
 const nowPage = ref(1)
 const endPage = Math.ceil(article.value.length/articlesPerPage)
-const timeFunc = function(){
-  flipAnimate.value.animate__bounce = false
-  flipAnimate.value.animate__animated = false
 
-  setTimeout(()=>{
-      flipAnimate.value.animate__bounce = true
-      flipAnimate.value.animate__animated = true
-      },10)
-}
 const nextPage = function(){
   if(nowPage.value<endPage){
     nowPage.value+=1
@@ -115,6 +96,19 @@ const endPoint = computed(()=>{
 })
 const articleList = computed(()=>{
   return article.value.slice(startPoint.value,endPoint.value)
+})
+
+onMounted(()=>{
+  axios({
+    method : 'get',
+    url : 'http://127.0.0.1:8000/accounts/userarticles/',
+    headers : {
+      Authorization : `Token ${store.token}`
+    }
+  })
+  .then(res=>{
+    article.value = res.data
+  })
 })
 
 </script>
