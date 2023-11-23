@@ -26,9 +26,9 @@ environ.Env.read_env(
 
 financial_API_KEY = env('financial_API_KEY')
 change_API_KEY = env('change_API_KEY')
-# youbute_API_KEY = env('youbute_API_KEY')
-# naver_ID = env('naver_ID')
-# naver_KEY = env('naver_KEY')
+youbute_API_KEY = env('youbute_API_KEY')
+naver_ID = env('naver_ID')
+naver_KEY = env('naver_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/

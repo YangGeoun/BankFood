@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from django.shortcuts import render
+from django.conf import settings
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
@@ -22,7 +23,8 @@ def youtube(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def getYoutube(request):
-    url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=AIzaSyDhIuh0Zm5__5XL7Mb6MjhNdsLb_EENEOc&q=금융&maxResults=10'
+    api_key = settings.youbute_API_KEY
+    url = f'https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key={api_key}&q=금융&maxResults=10'
     response = requests.get(url).json()
     for video in response.get('items'):
         youtube = Youtube()
@@ -47,8 +49,10 @@ def news(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticatedOrReadOnly])
 def getnews(request):
+    naver_id = settings.naver_ID
+    naver_key = settings.naver_KEY
     url = 'https://openapi.naver.com/v1/search/news.json?query=금융&start=1&display=30'
-    headers = {'X-Naver-Client-Id':'hA5tn6adwDPQB3ldzXJy','X-Naver-Client-Secret':'xPZUuPw7xe'}
+    headers = {'X-Naver-Client-Id':naver_id,'X-Naver-Client-Secret':naver_key}
     response = requests.get(url,headers=headers).json()
     # print(response)
     for item in response.get('items'):

@@ -5,6 +5,7 @@ import MyPage from '../views/MyPage.vue'
 import Compare from '../views/Compare.vue'
 import Article from '../views/Article.vue'
 import Loading from '../views/Loading.vue'
+import Recommend from '../views/Recommend.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,6 +38,11 @@ const router = createRouter({
       path: '/articles',
       name: 'article',
       component : Article,
+    },
+    {
+      path: '/recommend',
+      name: 'recommend',
+      component : Recommend,
     },
     
   ]

@@ -120,7 +120,8 @@ def deposit(request):
 
 @api_view(['GET'])
 def getdeposit(request):
-    url = 'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?topFinGrpNo=020000&pageNo=1&auth=c9c8354f95e8ddb8e192c5bc0859e8bf'
+    api_key = settings.financial_API_KEY
+    url = 'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?topFinGrpNo=020000&pageNo=1&auth='+api_key
     response = requests.get(url).json()
     for product in response.get('result').get('baseList'):
         if not Deposit.objects.filter(fin_prdt_cd=product.get('fin_prdt_cd')).exists():
@@ -147,7 +148,8 @@ def saving(request):
 
 @api_view(['GET'])
 def getdeopsitoption(request):
-    url = 'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?topFinGrpNo=020000&pageNo=1&auth=c9c8354f95e8ddb8e192c5bc0859e8bf'
+    api_key = settings.financial_API_KEY
+    url = 'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?topFinGrpNo=020000&pageNo=1&auth='+api_key
     response = requests.get(url).json()
     for option in response.get('result').get('optionList'):
         if not DepositOption.objects.filter(fin_prdt_cd=option.get('fin_prdt_cd'),save_trm=option.get('save_trm')).exists():
@@ -166,7 +168,8 @@ def getdeopsitoption(request):
 
 @api_view(['GET'])
 def getsaving(request):
-    url = 'http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json?auth=c9c8354f95e8ddb8e192c5bc0859e8bf&topFinGrpNo=020000&pageNo=1'
+    api_key = settings.financial_API_KEY
+    url = f'http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json?auth={api_key}f&topFinGrpNo=020000&pageNo=1'
     response = requests.get(url).json()
     for product in response.get('result').get('baseList'):
         if not Saving.objects.filter(fin_prdt_cd=product.get('fin_prdt_cd')).exists():
@@ -187,7 +190,8 @@ def getsaving(request):
 
 @api_view(['GET'])
 def getsavingoption(request):
-    url = 'http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json?auth=c9c8354f95e8ddb8e192c5bc0859e8bf&topFinGrpNo=020000&pageNo=1'
+    api_key = settings.financial_API_KEY
+    url = f'http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json?auth={api_key}&topFinGrpNo=020000&pageNo=1'
     response = requests.get(url).json()
     for option in response.get('result').get('optionList'):
         print(option)
