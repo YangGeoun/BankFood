@@ -56,9 +56,10 @@
     <hr>
     <div>
       <Chart 
-      :data1="[4,2,3,2]"
-      :data2="[5,3,4,3]"
-      :name="['a','b','c','d']"
+      :data1="chartdata1"
+      :data2="chartdata2"
+      :name="chartname"
+      v-if="isShow"
       />
     </div>
   </div>
@@ -79,6 +80,18 @@ const flipAnimate = ref({
 const articlesPerPage = 7;
 const article = ref([])
 const nowPage = ref(1)
+const chartname = ref([])
+const chartdata1 = ref([])
+const chartdata2 = ref([])
+const isShow = ref(false)
+let sum1 = 0
+let sum2 = 0
+
+setTimeout(() => {
+  isShow.value = true
+}, 50);
+
+
 const endPage = computed(()=>{
   return Math.ceil(article.value.length/articlesPerPage)
 })
@@ -126,10 +139,42 @@ onMounted(()=>{
     }
   })
   .then(res =>{
+    console.log(res)
     store.userBank = res.data
     article.value = store.userBank
-    console.log(res.data)
-
+    for (const product of res.data)
+      if ('depositoption_set' in product) {
+        chartname.value.push(product.fin_prdt_nm)
+        sum1 = 0
+        sum2 = 0
+        for (const opt of product.depositoption_set) {
+          sum1 += opt.intr_rate2
+          sum2 += opt.intr_rate
+        }
+        chartdata1.value.push(sum1/product.depositoption_set.length)
+        chartdata2.value.push(sum2/product.depositoption_set.length)
+      } else {
+        chartname.value.push(product.fin_prdt_nm)
+        sum1 = 0
+        sum2 = 0
+        for (const opt of product.savingoption_set) {
+          sum1 += opt.intr_rate2
+          sum2 += opt.intr_rate
+        }
+        chartdata1.value.push(sum1/product.savingoption_set.length)
+        chartdata2.value.push(sum2/product.savingoption_set.length)
+      }
+      chartname.value.push('평균')
+      sum1 = 0
+      chartdata1.value.forEach((el)=>{
+        sum1 += el
+      })
+      chartdata1.value.push(sum1/chartdata1.value.length)
+      sum1 = 0
+      chartdata2.value.forEach((el)=>{
+        sum1 += el
+      })
+      chartdata2.value.push(sum1/chartdata2.value.length)
   })
   .catch(err =>{
     console.log(err)

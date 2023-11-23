@@ -16,6 +16,7 @@ from .serializer import DepositSerializer, SavingSerializer, CardSerializer, Fun
 # Create your views here.
 
 import pandas as pd
+import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
@@ -26,17 +27,48 @@ def aaa(requser):
     df = pd.DataFrame(
     list(
         User.objects.all().values(
-            'id','age','salary', 'money','gender'
+            'id','age','salary', 'money'
         )
     )
-    )
-   
+    )  
+    df = df.fillna(1)
+    df = df.replace(np.nan, 0)
+    # print(df.info())
+
     normalization_df = (df - df.min())/(df.max() - df.min())
-    user_sim = cosine_similarity(normalization_df, normalization_df)
-    user_sim_df = pd.DataFrame(user_sim, index=normalization_df.id, columns=normalization_df.id)
-    print(user_sim_df)
-    print(df['gender'])
-    return Response({'ad':'asd'})
+    user_sim = cosine_similarity(normalization_df[['age','salary', 'money']], normalization_df[['age','salary', 'money']])
+    user_sim_df = pd.DataFrame(user_sim, index=df.id, columns=df.id)
+    userid_lst = user_sim_df[10].sort_values(ascending=False).head(101).index.to_list()
+    deposit_dic = {}
+    saving_dic = {}
+    data = []
+    for userid in userid_lst:
+        User = get_user_model()
+        user = User.objects.get(pk=userid)
+        deposits = user.deposit_set.all()
+        savings = user.saving_set.all()
+        for el in deposits:
+            if not el.fin_prdt_cd in deposit_dic:
+                deposit_dic.setdefault(el.fin_prdt_cd, 1)
+            else:
+                deposit_dic[el.fin_prdt_cd] += 1
+        for el in savings:
+            if not el.fin_prdt_cd in deposit_dic:
+                saving_dic.setdefault(el.fin_prdt_cd, 1)
+            else:
+                saving_dic[el.fin_prdt_cd] += 1
+    
+    recommend_deposits = sorted(deposit_dic.items(), key=lambda x: x[1], reverse=True)[:3] 
+    recommend_savings = sorted(saving_dic.items(), key=lambda x: x[1], reverse=True)[:3]
+    for recommend in recommend_deposits:
+        deposit = Deposit.objects.get(fin_prdt_cd=recommend[0])
+        data.append(DepositSerializer(deposit).data)
+    for recommend in recommend_savings:
+        saving = Saving.objects.get(fin_prdt_cd=recommend[0])
+        data.append(SavingSerializer(saving).data)
+
+        
+    return Response(data)
 
 
 
@@ -215,8 +247,6 @@ def getfund(request):
 
     # 열린 페이지 소스를 받아오기
     for i in range(242):
-        html = driver.page_source
-
         fund1 = Fund()
         fund2 = Fund()
         fund3 = Fund()
@@ -230,6 +260,7 @@ def getfund(request):
         lst = [fund1,fund2,fund3,fund4,fund5,fund6,fund7,fund8,fund9,fund10]
         
         # 필요한 정보 파싱
+        html = driver.page_source
         soup = BeautifulSoup(html, "html.parser")
         table = soup.select_one('#Grid')
         punds = table.select('#resultList > tr')

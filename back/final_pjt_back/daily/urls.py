@@ -8,4 +8,7 @@ urlpatterns = [
     path('getnews/', views.getnews),
     path('getexchange/', views.getexchange),
     path('exchange/', views.exchange),
+    path('getindex/', views.getindex),
+    path('index/', views.index),
+    
 ]

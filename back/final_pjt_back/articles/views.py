@@ -13,7 +13,7 @@ from finances.serializer import DepositSerializer, SavingSerializer
 @permission_classes([IsAuthenticatedOrReadOnly])
 def index(request):
     if request.method == 'GET':
-        articles = Article.objects.all()
+        articles = Article.objects.all().order_by('-created_at')
         serializer = ArticleSerializer(articles,many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
@@ -62,7 +62,7 @@ def detail(request,pk):
 def comments(request, article_pk):
     article = get_object_or_404(Article,pk=article_pk)
     if request.method == 'GET':
-        comments = article.comment_set.all()
+        comments = article.comment_set.all().order_by('-created_at')
         serializer = CommentSerializer(comments,many=True)
         return Response(serializer.data)
     elif request.method == 'POST':

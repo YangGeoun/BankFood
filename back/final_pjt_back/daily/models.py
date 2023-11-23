@@ -26,3 +26,21 @@ class Exchange(models.Model):
     kftc_bkpr = models.TextField()                     # 서울외국환중개장부가격   
     kftc_deal_bas_r = models.TextField()               # KFTC_DEAL_BAS_R	       
     cur_nm = models.TextField()                        # 국가/통화명
+
+
+class Stock(models.Model):
+    name = models.TextField()
+    now_price = models.TextField()
+    price_raise = models.TextField()
+    price_raise_percent = models.TextField()
+    sichong = models.TextField(blank=True, null=True)
+    trading_volume = models.TextField(blank=True, null=True)
+
+
+class Index(models.Model):
+    name = models.TextField()
+    now_price = models.TextField()
+    price_raise = models.TextField()
+    price_raise_percent = models.TextField()
+    chart_url = models.TextField(blank=True, null=True)
+    updated_day = models.TextField(blank=True, null=True)

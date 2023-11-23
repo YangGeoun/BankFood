@@ -1,12 +1,14 @@
 import html 
+import json
 import requests
 from bs4 import BeautifulSoup
+from selenium import webdriver
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
-from .models import Youtube, News, Exchange
-from .serializer import YoutubeSerializer, NewsSerializer, ExchangeSerializer
+from .models import Youtube, News, Exchange, Stock, Index
+from .serializer import YoutubeSerializer, NewsSerializer, ExchangeSerializer, IndexSerializer, StockSerializer
 
 # Create your views here.
 @api_view(['GET'])
@@ -96,4 +98,42 @@ def getexchange(request):
 def exchange(request):
     exchanges = Exchange.objects.all()
     serializer = ExchangeSerializer(exchanges, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getindex(requs):
+    url = 'https://m.stock.naver.com/'
+    driver = webdriver.Chrome()
+    driver.get(url)
+    html = driver.page_source
+    soup = BeautifulSoup(html, "html.parser")
+    temp = soup.select_one('.MajorStockIndexList_inner__Jz7ug').select('.MajorStockIndexList_list___wDhf')
+    for el in temp:
+        data_list = el.get_text(separator="***").split('***')
+        img_url = el.select_one('img').get('src')
+        name = data_list[0]
+        now_price = data_list[1]
+        print(data_list)
+        if data_list[3][0] == '-':
+            price_raise = '-' + data_list[2]
+        else:
+            price_raise = '+' + data_list[2]
+        price_raise_percent = data_list[3]
+        updated_day = data_list[4]
+        idx = Index()
+        idx.name = name
+        idx.now_price = now_price
+        idx.chart_url = img_url
+        idx.price_raise = price_raise
+        idx.price_raise_percent = price_raise_percent
+        idx.updated_day = updated_day
+        idx.save()
+    return Response('생성되었습니다.')
+
+
+@api_view(['GET'])
+def index(request):
+    indexs = Index.objects.all()
+    serializer = IndexSerializer(indexs, many=True)
     return Response(serializer.data)
