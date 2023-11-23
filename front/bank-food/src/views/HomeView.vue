@@ -151,7 +151,7 @@
         </div>
       </div>
     </div>
-    
+    <quiz/>
     
   <!-- 모달창 -->
       <div id="chart1-modal">
@@ -481,9 +481,9 @@ onMounted(()=>{
   const newsDiv = document.querySelector('#newsDiv')
   const youtubeDiv = document.querySelector('#youtubeDiv')
   const chartDiv = document.querySelector('#chartDiv')
-  // stores.getDjangoYoutube()
-  // stores.getDjangoNews()
-  // stores.getDjangoExchange()
+  //stores.getDjangoYoutube()
+  //stores.getDjangoNews()
+  //stores.getDjangoExchange()
   stores.getExchange()
   stores.getYoutube()
   stores.getNews()
