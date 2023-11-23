@@ -150,7 +150,7 @@
         </div>
       </div>
     </div>
-    
+    <quiz/>
     
   <!-- 모달창 -->
       <div id="chart1-modal">
@@ -417,6 +417,7 @@ import axios from 'axios'
 import {useCounterStore} from '@/stores/counter'
 import YoutubeCard from '@/components/YoutubeCardComp.vue'
 import NewsPage from "@/components/NewsPage.vue";
+import quiz from "../components/quiz.vue";
 
 const stock = ref([])
 const stockIdx = ref([])
@@ -475,9 +476,9 @@ onMounted(()=>{
   const newsDiv = document.querySelector('#newsDiv')
   const youtubeDiv = document.querySelector('#youtubeDiv')
   const chartDiv = document.querySelector('#chartDiv')
-  // stores.getDjangoYoutube()
-  // stores.getDjangoNews()
-  // stores.getDjangoExchange()
+  //stores.getDjangoYoutube()
+  //stores.getDjangoNews()
+  //stores.getDjangoExchange()
   stores.getExchange()
   stores.getYoutube()
   stores.getNews()
