@@ -44,8 +44,12 @@ setTimeout(()=>{
     array2.innerHTML = "WELCOME"
     array1.classList.add('animate__fadeIn')
     array2.classList.add('animate__fadeIn')
+    document.body.style.cursor = 'wait'
+    array1.style.cursor = 'wait'
+    array2.style.cursor = 'wait'
     setTimeout(()=>{
     nav.style.display = 'block'
+    document.body.style.cursor = 'auto'
     router.push({name:'home'})  
     },3000)}
 
