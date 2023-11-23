@@ -2,8 +2,8 @@
     <tr  :id="`open-detail-modal${idx}`">
         <td>{{ article.author_name }}</td>
         <td>{{ article.title }}</td>
-        <td>{{ article.created_at }}</td>
-        <td>{{ article.updated_at }}</td>
+        <td>{{ createdat }}</td>
+        <td>{{ updatedat }}</td>
 
                     <!-- 모달창 -->
             <div :id="`detail-modal${idx}`"
@@ -89,6 +89,9 @@ import Swal from 'sweetalert2';
 
 const store = useCounterStore()
 const props = defineProps(['article','idx'])
+const createdat = ref(props.article.created_at.slice(0,10))
+const updatedat = ref(props.article.updated_at.slice(0,10))
+
 const idx = props.idx
 const commentWrite = ref('')
 const commentList = ref([])
