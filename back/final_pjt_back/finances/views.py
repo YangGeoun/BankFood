@@ -218,6 +218,7 @@ def getcard(request):
         soup = BeautifulSoup(response.text, "html.parser")
 
         card = Card()
+        card.img_url = soup.select_one('.img').get('src')
         card.name = soup.select_one('.txt').get_text()
         card.naver_card_id = id
         card.annual_fee = soup.select_one('.as_annualFee').select_one('span').get_text()
@@ -312,7 +313,7 @@ def fund(request):
 
 
 @api_view(['GET'])
-def test(request):
+def cardrecommend(request):
     conditions = request.GET
     cards = Card.objects.all()
     if conditions.get('medical') == '1':
@@ -335,10 +336,6 @@ def test(request):
         cards = cards.filter(fuel__isnull=False)
     if conditions.get('car') == '2':
         cards = cards.filter(public_transport__isnull=False)
-    if conditions.get('simple_payment') == '1':
-        cards = cards.filter(easy_payment__isnull=False)
-    if conditions.get('simple_payment') == '2':
-        cards = cards.filter(easy_payment__isnull=True)
     serializer = CardSerializer(cards, many=True)
     return Response(serializer.data)
 
@@ -438,5 +435,89 @@ def deposit_join(request):
     deposit[0].user.add(request.user)
     return Response(status=status.HTTP_200_OK)
 
+benefits = [
+  '주유','쇼핑','대형마트','편의점','외식','카페/베이커리','영화','대중교통','관리비','통신','교육','육아',
+  '문화','레저','항공마일리지','프리미엄' ,'하이패스' ,'오토','의료','뷰티','포인트/캐시백' ,'간편결제','렌탈'
+]
+
+
+benefits_dic = {
+    '주유': 'fuel',
+    '쇼핑' : 'shoping',
+    '대형마트' : 'supermarket',
+    '편의점': 'convenience_store',
+    '외식' : 'eat_out',
+    '카페/베이커리' : 'cafe/bakery',
+    '영화' : 'movie',
+    '대중교통' : 'public_transport',
+    '관리비' : 'maintenance',
+    '통신' : 'communication',
+    '교육' : 'education',
+    '육아' : 'parenting',
+    '문화' : 'culture',
+    '레저' : 'leisure',
+    '항공마일리지' : 'airline_mileage',
+    '프리미엄' : 'premium',
+    '하이패스' : 'hi-pass',
+    '오토' : 'auto',
+    '의료' : 'medical',
+    '뷰티' : 'beauty',
+    '포인트/캐시백' : 'points/cashback',
+    '간편결제' : 'easy_payment',
+    '렌탈' : 'rental',
+    '반려동물' : 'pet',
+}
+
+@api_view(['GET'])
+def cardsearch(requset, conditions):
+    cards = Card.objects.all()
+    if conditions[0] == '1':
+        cards=cards.filter(fuel__isnull=False)
+    if conditions[1] == '1':
+        cards=cards.filter(shoping__isnull=False)
+    if conditions[2] == '1':
+        cards=cards.filter(convenience_store__isnull=False)
+    if conditions[3] == '1':
+        cards=cards.filter(eat_out__isnull=False)
+    if conditions[4] == '1':
+        cards=cards.filter(cafe_bakery__isnull=False)
+    if conditions[5] == '1':
+        cards=cards.filter(movie__isnull=False)
+    if conditions[6] == '1':
+        cards=cards.filter(public_transport__isnull=False)
+    if conditions[7] == '1':
+        cards=cards.filter(maintenance__isnull=False)
+    if conditions[8] == '1':
+        cards=cards.filter(communication__isnull=False)
+    if conditions[9] == '1':
+        cards=cards.filter(education__isnull=False)
+    if conditions[9] == '1':
+        cards=cards.filter(parenting__isnull=False)
+    if conditions[10] == '1':
+        cards=cards.filter(culture__isnull=False)
+    if conditions[11] == '1':
+        cards=cards.filter(leisure__isnull=False)
+    if conditions[12] == '1':
+        cards=cards.filter(airline_mileage__isnull=False)
+    if conditions[13] == '1':
+        cards=cards.filter(premium__isnull=False)
+    if conditions[14] == '1':
+        cards=cards.filter(hi_pass__isnull=False)
+    if conditions[15] == '1':
+        cards=cards.filter(auto__isnull=False)
+    if conditions[16] == '1':
+        cards=cards.filter(medical__isnull=False)
+    if conditions[17] == '1':
+        cards=cards.filter(beauty__isnull=False)
+    if conditions[18] == '1':
+        cards=cards.filter(points_cashback__isnull=False)
+    if conditions[19] == '1':
+        cards=cards.filter(easy_payment__isnull=False)
+    if conditions[20] == '1':
+        cards=cards.filter(rental__isnull=False)
+    if conditions[21] == '1':
+        cards=cards.filter(pet__isnull=False)
+    serializer = CardSerializer(cards, many=True)
+    return Response(serializer.data)
 
 

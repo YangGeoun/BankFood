@@ -81,6 +81,7 @@ class Card(models.Model):
     naver_card_id = models.TextField() 
     annual_fee = models.TextField()             # 연회비
     base_performance = models.TextField()      # 기준 실적 (전월 실적)
+    img_url = models.TextField()
     # 해택 필드
     fuel = models.TextField(blank=True, null=True) 
     shoping = models.TextField(blank=True, null=True) 

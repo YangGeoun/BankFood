@@ -6,6 +6,8 @@ import Compare from '../views/Compare.vue'
 import Article from '../views/Article.vue'
 import Loading from '../views/Loading.vue'
 import Recommend from '../views/Recommend.vue'
+import CreditCard from '../views/CreditCard.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -43,6 +45,11 @@ const router = createRouter({
       path: '/recommend',
       name: 'recommend',
       component : Recommend,
+    },
+    {
+      path: '/creditcard',
+      name: 'CreditCard',
+      component : CreditCard,
     },
     
   ]
