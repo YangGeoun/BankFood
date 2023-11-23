@@ -15,10 +15,8 @@
   </div>
 <!-- <a href="https://www.flaticon.com/free-icons/plus" title="plus icons">Plus icons created by Freepik - Flaticon</a> -->
     <div class="d-flex justify-content-center" style="margin-top: 20px;;">
-      <table class="type09 " style="border: 1px solid skyblue;
-      box-shadow: 0 0 5px darkblue;      
-      "
-      :class="flipAnimate"
+      <table class="type09 " style="border: 1px solid skyblue; 
+      box-shadow: 0 0 5px darkblue;" v-if="store.userBank.length>0"
       >
         <thead>
           <tr>
@@ -37,7 +35,6 @@
     <div class="d-flex justify-content-center" style="margin: 10px">
       <img src="@/assets/PREV.png" alt="" style="width: 30px; cursor: pointer;"
       @click="()=>{prevPage()
-      timeFunc()
       
       }"
       >
@@ -47,7 +44,6 @@
       <img src="@/assets/NEXT.png" alt="" style="width: 30px; cursor: pointer;" 
       @click="()=>{nextPage()
       
-      timeFunc()
 
       }"
 
