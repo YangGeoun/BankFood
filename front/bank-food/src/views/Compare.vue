@@ -76,7 +76,6 @@
 </template>
 
 <script setup>
-
 import axios from 'axios';
 import { ref, computed, onMounted } from 'vue'
 import { useCounterStore } from '../stores/counter';
