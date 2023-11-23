@@ -69,7 +69,8 @@
       </div>
     </div>  
     <!-- 03 주식차트 -->
-    <div style="width: 600px; height: 600px; border-radius: 15px;
+    <div class="d-flex">
+      <div style="width: 600px; height: 600px; border-radius: 15px;
     box-shadow: 0px 0px 1px black; background-color: white;  margin-left: 200px; margin-top: 50px; margin-bottom: 50px;"
     id="chartDiv"
     :class="fadeIn3"
@@ -404,8 +405,12 @@
           </div>
       </div>
     <!-- 모달창 끝 -->
+      <Quiz 
+      style="margin-top: 50px;"
+      />
+    </div>
 
-  </div>
+    </div>
 </template>
 
 <script setup>
@@ -417,6 +422,7 @@ import axios from 'axios'
 import {useCounterStore} from '@/stores/counter'
 import YoutubeCard from '@/components/YoutubeCardComp.vue'
 import NewsPage from "@/components/NewsPage.vue";
+import Quiz from "@/components/quiz.vue"
 
 const stock = ref([])
 const stockIdx = ref([])

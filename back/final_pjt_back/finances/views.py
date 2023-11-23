@@ -21,7 +21,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
 @api_view(['GET'])
-def aaa(requser):
+def recommend(request):
     User = get_user_model()
     
     df = pd.DataFrame(
@@ -32,13 +32,13 @@ def aaa(requser):
     )
     )  
     df = df.fillna(1)
-    df = df.replace(np.nan, 0)
+    df = df.replace(np.NaN, 0)
     # print(df.info())
 
     normalization_df = (df - df.min())/(df.max() - df.min())
     user_sim = cosine_similarity(normalization_df[['age','salary', 'money']], normalization_df[['age','salary', 'money']])
     user_sim_df = pd.DataFrame(user_sim, index=df.id, columns=df.id)
-    userid_lst = user_sim_df[10].sort_values(ascending=False).head(101).index.to_list()
+    userid_lst = user_sim_df[request.user.id].sort_values(ascending=False).head(101).index.to_list()
     deposit_dic = {}
     saving_dic = {}
     data = []
