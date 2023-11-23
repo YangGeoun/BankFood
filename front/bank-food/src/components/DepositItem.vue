@@ -50,6 +50,7 @@ const props = defineProps({
 })
 
 const join = function () {
+  if (props.isDeposit){
   Swal.fire({
   title: "Are you sure?",
   text: "해당 상품에 가입하시겠습니까?",
@@ -82,7 +83,46 @@ const join = function () {
     console.log(err)
   })
   }
+
 });
+  }else {
+  Swal.fire({
+  title: "Are you sure?",
+  text: "해당 상품에 가입하시겠습니까?",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes !!"
+}).then((result) => {
+  if (result.isConfirmed) {
+    axios({
+    url : `${store.ServerURL}finances/saving/join/`,
+    data : {
+      'fin_prdt_nm':props.deposit.fin_prdt_nm,
+    },
+    method : 'POST',
+    headers : {
+      Authorization:`Token ${store.token}`
+    }
+  })
+  .then ((res)=>{
+    Swal.fire({
+          icon: "success",
+          title: `해당 상품에 가입 완료했습니다..`,
+          showConfirmButton: false,
+          timer: 1500
+          });
+  })
+  .catch ((err)=>{
+    console.log(err)
+  })
+  }
+
+});
+
+  }
+
 
 }
 
