@@ -18,11 +18,9 @@
 
 # 2. 설계 내용(아키텍처 등) 및 실제 구현 정도
 
-### - 메인 화면 구성
+### - 메인 화면 구성![캡처2.PNG](.\readme_img/캡처.PNG)
 
-![캡처.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\캡처.PNG)
-
-![캡처2.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\캡처2.PNG)
+![캡처.PNG](.\readme_img\캡처2.PNG)
 
 구현한 기능으로 가는 카드를 캐로젤 형식으로 구현
 
@@ -32,15 +30,17 @@
 
 간단한 금융 퀴즈
 
+
+
 #### - 환율계산기
 
-![환율.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\환율.PNG)
+![환율.PNG](./readme_img/환율.PNG)
 
 환율 계산기는 간단한 기능으로 어떤 페이지에서든 모달로 뜰 수 있도록 구현
 
-#### - 내 근처 은행 검색
 
-![지도.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\지도.PNG)
+
+![지도.PNG](./readme_img/지도.PNG)
 
 지역 정보를 입력하면 그 지역 은행을 모두 추천
 
@@ -48,9 +48,9 @@
 
 #### - 유저 소통 게시판
 
-![게시판.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\게시판.PNG)
+![게시판.PNG](./readme_img/게시판.PNG)
 
-![게시글생성.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\게시글생성.PNG)
+![게시글생성.PNG](./readme_img/게시글생성.PNG)
 
 일반적인 게시판 및 댓글 구현
 
@@ -58,23 +58,23 @@
 
 #### - 프로필 페이지
 
-![메인.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\메인.PNG)
+![메인.PNG](./readme_img/메인.PNG)
 
 프로필을 유저 정보를 하나하나 변경 가능하다.
 
 월급 재산 등 민감한 정보는 아래의 디테일에서 눌러야 보이게 만들었다.
 
-![프로필게시판.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\프로필게시판.PNG)
+![프로필게시판.PNG](./readme_img/프로필게시판.PNG)
 
 내가 작성한 게시글을 조회 가능하다.
 
-![프로필예적금.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\프로필예적금.PNG)
+![프로필예적금.PNG](./readme_img/프로필예적금.PNG)
 
 내가 가입한 상품 조회와 되회된 상품의 그래프를 볼 수 있다.
 
 #### - 예적금 비교 페이지
 
-![예금적금.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\예금적금.PNG)
+![예금적금.PNG](./readme_img/예금적금.PNG)
 
 내가 원하는 예금 적금으로 나누어 은행, 이자 계산 방식, 저축기간을 선택해서 검색가능
 
@@ -82,13 +82,13 @@
 
 #### - 금융 상품 추천 페이지
 
-![추천.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\추천.PNG)
+![추천.PNG](./readme_img/추천.PNG)
 
 내가 가입한 상품과 추천 상품을 한번에 보면서 비교 가능하다.
 
 # 3. 데이터베이스 모델링(ERD)
 
-![ERD.PNG](C:\Users\SSAFY\Desktop\새%20폴더%20(3)\ERD.PNG)
+![ERD.PNG](./readme_img/ERD.PNG)
 
 # 4. 금융 상품 추천 알고리즘에 대한 기술적 설명
 
