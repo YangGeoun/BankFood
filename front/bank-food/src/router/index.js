@@ -48,7 +48,7 @@ const router = createRouter({
     },
     {
       path: '/creditcard',
-      name: 'CreditCard',
+      name: 'creditCard',
       component : CreditCard,
     },
     

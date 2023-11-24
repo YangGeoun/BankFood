@@ -26,6 +26,8 @@
         </table>
         <button  class="btn mt-2" style="width: 100%; height: 100px; font-weight: bold; font-size: 25px; border: 1px solid skyblue; box-shadow: 0 0 5px darkblue;"
           @click.prevent="()=>{router.push({name:'compare'})}" >예금 적금 상품 <br> 가입하러가기</button>
+        <button  class="btn mt-2" style="width: 100%; height: 100px; font-weight: bold; font-size: 25px; border: 1px solid skyblue; box-shadow: 0 0 5px darkblue;"
+          @click.prevent="()=>{router.push({name:'creditCard'})}" >카드 상품 <br> 추천 받기</button>
       </div>
       <div class="col-5">
         <h2 style="font-weight: bold;">내가 가입한 상품</h2>

@@ -31,7 +31,7 @@
   
   </div>
   <div :style="maxWidth" class="px-5 py-3 mx-auto" style="background-color: white; margin-top: 20px; border-radius: 10px;">
-    <div class="row row-cols-md-5 g-4" >
+    <div class="row row-cols-md-5 g-4" style="margin-left: 50px;">
       <div class="card mx-4" data-masonry='{"percentPosition": true }' v-for="card in cards" >
         <div class="product-title">
           <div class="product-img-div">

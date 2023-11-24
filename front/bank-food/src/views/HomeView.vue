@@ -20,7 +20,7 @@
       <div class="balloon d-flex align-items-center" :style="balloonWidth" style="position: absolute; top: 150px; ">
         <p style="font-weight: bold; font-size: 23px; text-align: center;">캐릭터를 눌러 나에게 맞는 금융상품을 추천받으세요.</p>
       </div>
-      <img @click="router.push({name:'recommend'})" src="@/assets/QUESTION.png" :style="pigIconWidth" style=" position: absolute; top:450px;" alt="">
+      <img @click="router.push({name:'recommend'})" src="@/assets/QUESTION.png" :style="pigIconWidth" style=" position: absolute;  top:450px; cursor: pointer;" alt="">
     <!-- 01 데일리(튜브) -->
 
     <div >
