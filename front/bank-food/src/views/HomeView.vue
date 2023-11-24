@@ -18,9 +18,9 @@
         
       </div>
       <div class="balloon d-flex align-items-center" :style="balloonWidth" style="position: absolute; top: 150px; ">
-        <p style="font-weight: bold; font-size: 23px; text-align: center;">캐릭터를 누르면 금융 문제가　 나옵니다.</p>
+        <p style="font-weight: bold; font-size: 23px; text-align: center;">캐릭터를 눌러 나에게 맞는 금융상품을 추천받으세요.</p>
       </div>
-      <img src="@/assets/QUESTION.png" :style="pigIconWidth" style=" position: absolute; top:450px;" alt="">
+      <img @click="router.push({name:'recommend'})" src="@/assets/QUESTION.png" :style="pigIconWidth" style=" position: absolute; top:450px;" alt="">
     <!-- 01 데일리(튜브) -->
 
     <div >
@@ -422,10 +422,13 @@ import "vue3-carousel/dist/carousel.css";
 import MainCard from '@/components/MainCardComp.vue'
 import axios from 'axios'
 import {useCounterStore} from '@/stores/counter'
+import { useRouter } from "vue-router";
 import YoutubeCard from '@/components/YoutubeCardComp.vue'
 import NewsPage from "@/components/NewsPage.vue";
 import Quiz from "@/components/quiz.vue"
 
+
+const router = useRouter()
 const stock = ref([])
 const stockIdx = ref([])
 const Kospi = ref([])

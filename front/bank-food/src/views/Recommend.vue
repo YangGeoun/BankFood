@@ -114,6 +114,10 @@
     width : `${(screen.availWidth/12)*10}px`
   })
 
+  setTimeout(() => {
+    isShow1.value = true
+  }, 100);
+
   const isShow1 = ref(false)
   const isShow2 = ref(false)
   const myBank = ref([])
