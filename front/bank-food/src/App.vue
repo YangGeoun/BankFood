@@ -62,30 +62,7 @@
       </div>
 
 
-      <!-- animate__heartBeat animate__infinite -->
-      
-        
-          <p href=""  class="floating animate__animated d-flex flex-column align-items-center"  :style="userWidth" style="text-decoration: none; " :class="userFlag"
-          @mouseover="function(){ 
-
-            myPage.noneDisplay = false
-            myPage.goDisplay = true
-            userDropDown()
-            }"
-          @mouseleave="function(){ 
-            userFlag=[]
-            myPage.noneDisplay = true
-            myPage.goDisplay = false
-            userDropDownFalse()
-          }"
-          
-          >
-          <div style="display: none; width: 50px;"  id="userDrop" >
-            </div>
-            <img src="@/assets/USER.png" style="width: 100%;" alt=""
-            >
-            
-          </p>
+    
   
       <div id="calc-modal" style="z-index: 99999;">
         <div class="calc-modal-content">

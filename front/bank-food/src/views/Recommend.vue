@@ -1,11 +1,11 @@
 <template>
   <div style="height: 3000px;">
   <div :style="maxWidth" class="mt-3 px-5 py-3 mx-auto" style="background-color: white; border-radius: 10px;" >
-    <div class="row">
+    <div class="row" style="margin-top: 25px;">
 
 
-      <div class="col-2">
-        <h2>내 정보</h2>
+      <div class="col-2" >
+        <h2 style="font-weight: bold;">내 정보</h2>
         <table class="type09 " style="width: 100%; margin-top: 20px; border: 1px solid skyblue; 
           box-shadow: 0 0 5px darkblue;" v-if="recommends?.length>0"
           >
@@ -24,9 +24,11 @@
               </tr>
             </tbody>
         </table>
+        <button  class="btn mt-2" style="width: 100%; height: 100px; font-weight: bold; font-size: 25px; border: 1px solid skyblue; box-shadow: 0 0 5px darkblue;"
+          @click.prevent="()=>{router.push({name:'compare'})}" >예금 적금 상품 <br> 가입하러가기</button>
       </div>
       <div class="col-5">
-        <h2>내가 가입한 상품</h2>
+        <h2 style="font-weight: bold;">내가 가입한 상품</h2>
         <div class="d-flex justify-content-center" style="margin-top: 20px;">
           <table class="type09 " style="width: 100%; border: 1px solid skyblue; 
             box-shadow: 0 0 5px darkblue;" v-if="store.userBank.length>0"
@@ -45,12 +47,14 @@
               </tbody>
           </table>
         </div>
-        <button class="btn btn-info mt-2" style="width: 100%;" @click.prevent="showChart1">내 상품 그래프 보기</button>
+        <button class="btn mt-2" style="width: 100%; font-weight: bold; color: black; 
+        box-shadow: 3px 1px 5px darkblue; font-size: 20px;
+        " @click.prevent="showChart1">내 상품 그래프 보기</button>
       </div>
 
 
       <div class="col-5">
-        <h2>나와 비슷한 사람들이 가입한 상품</h2>
+        <h2 style="font-weight: bold;">나와 비슷한 사람들이 가입한 상품</h2>
         <div class="d-flex justify-content-center" style="margin-top: 20px;">
           <table class="type09 " style="width: 100%; border: 1px solid skyblue; 
             box-shadow: 0 0 5px darkblue;" v-if="recommends?.length>0"
@@ -69,7 +73,8 @@
               </tbody>
           </table>
         </div>
-        <button class="btn btn-info mt-2" style="width: 100%;" @click.prevent="showChart2">추천 상품 그래프 보기</button>
+        <button class="btn mt-2" style="width: 100%;font-weight: bold; font-size: 20px; border: 1px solid skyblue; box-shadow: 0 0 5px darkblue;"
+          @click.prevent="showChart2">추천 상품 그래프 보기</button>
       </div>
 
 
@@ -100,7 +105,9 @@
   import axios from 'axios';
   import { ref, onMounted } from 'vue';
   import { useCounterStore } from '../stores/counter';
+  import { useRouter } from 'vue-router';
   
+  const router = useRouter()
   const store = useCounterStore()
 
   const maxWidth = ref({
