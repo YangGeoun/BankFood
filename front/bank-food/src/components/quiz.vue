@@ -1,9 +1,17 @@
 <template>
-  <div class="d-flex flex-row" :style="pageBody">
+  <div class="d-flex flex-row" style="height: 600px; width: 600px;">
     
-    <div style="background-color: white; height: 600px; width: 450px; margin: 0px; margin-left: 30px; border-radius: 15px;
-    overflow: hidden;
-     border: 1px solid lightgray;" >
+    <div style="background-color: white; height: 600px; width: 600px; margin: 0px; margin-left: 30px; border-radius: 15px;
+    overflow: hidden; border: 1px solid lightgray;" >
+    <template v-if="flag">
+      <div class="center-box d-flex justify-content-center align-items-center flex-column" @click="clickIt"
+      >
+        <img src="@/assets/QUIZ.png" style="height: 200px; width: 200px;" alt="">
+        <h1 style="font-weight: bold;">오늘의 퀴즈!!!</h1>
+      </div>
+    
+    </template>
+
       <div style="background-color:rgb(145, 144, 144) ; width: 1000px; height: 35px; "
       class="d-flex align-items-center"
       >
@@ -20,7 +28,7 @@
       <div class="p-2" >
         <div class="row row-cols-1 row-cols-md-2 g-4 text-center">
           <div class="col" v-for="(quiz, index) in quizes">
-            <div class="card"  style="border-radius: 15px; position: relative;"  @click="showanswer(index)">
+            <div class="card"  style="border-radius: 15px; position: relative; height: 230px; width: 260px;"  @click="showanswer(index)" >
                 <div v-show="isShow[index]" style="background-color:skyblue; position: absolute; padding: 15px; border: 1px solid lightgray; 
                 border-radius: 10px; top:30%; margin-left: 25px;"
                 >
@@ -65,6 +73,10 @@
 <script setup>
   import { ref } from 'vue';
   import { useCounterStore } from '../stores/counter';
+  const flag = ref(true)
+  const clickIt = function(){
+    flag.value = false
+  }
   const store = useCounterStore()
   const num = Math.floor(Math.random() * 7)
   const quizes = store.quizes.slice(num,num+4)
@@ -77,5 +89,14 @@
 </script>
 
 <style scoped>
-
+.center-box {
+  position: absolute;
+    display: inline-block;
+    width: 570px;
+    height: 600px;
+    border-radius: 15px;
+    z-index: 1;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0,0,0,0.1);
+}
 </style>

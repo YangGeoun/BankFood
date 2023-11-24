@@ -68,90 +68,7 @@
       </Carousel>
       </div>
     </div>  
-    <!-- 03 주식차트 -->
-    <div class="d-flex">
-      <div style="width: 600px; height: 600px; border-radius: 15px;
-    box-shadow: 0px 0px 1px black; background-color: white;  margin-left: 200px; margin-top: 50px; margin-bottom: 50px;"
-    id="chartDiv"
-    :class="fadeIn3"
-    >
-    <br>
-      <div class="d-flex align-items-center" >
-        <h3 style="font-weight: 550; color: rgb(68, 67, 67);  margin-left: 50px; filter: drop-shadow(0px 0px 1px rgb(128, 127, 127));">03. 오늘의 주식
-        </h3>
-        <img src="@/assets/CHART.png" alt="" style="width: 50px; margin-left: 10px; filter: drop-shadow(1px 1px 3px black); margin-bottom: 30px;" >
-      </div>
-      <div class="d-flex flex-column" >
-        <div class="d-flex flex-row">
-          <div style="width: 200px; height: 200px; border-radius: 15px;
-          box-shadow: 0px 0px 1px black; background-color: white; margin: auto;"
-          class="cardItem"
-          id="open-chart1-modal"
-          >
-          <p style="margin-left: 10px; margin-top: 10px; font-weight: bold; font-size: 20px; margin-bottom: 5px;">{{ stockIdx[0]?.name }}</p>
-          <hr style="margin: 3px; color: red;">
-          <p style="margin-left: 10px; font-weight: bold; margin-bottom: 5px;" >{{ stockIdx[0]?.now_price}}</p>
-          <div :style="stockColor[0]">
-            <span style="margin-bottom: 0px; margin-left: 10px;">{{ stockIdx[0]?.price_raise }}</span>
-            <span style="margin-left: 10px;">{{  stockIdx[0]?.price_raise_percent }}</span>
-          </div>
-            <img :src="stockIdx[0]?.chart_url" alt="">
-          </div>
-
-          <div style="width: 200px; height: 200px; border-radius: 15px;
-          box-shadow: 0px 0px 1px black; background-color: white; margin: auto;"
-          class="cardItem"
-          id="open-chart2-modal"
-          >
-          
-          <p style="margin-left: 10px; margin-top: 10px; font-weight: bold; font-size: 20px; margin-bottom: 5px;">{{ stockIdx[1]?.name }}</p>
-          <hr style="margin: 3px; color: red;">
-          <p style="margin-left: 10px; font-weight: bold; margin-bottom: 5px;" >{{ stockIdx[1]?.now_price}}</p>
-          <div :style="stockColor[1]">
-            <span style="margin-bottom: 0px; margin-left: 10px;">{{ stockIdx[1]?.price_raise }}</span>
-            <span style="margin-left: 10px;">{{  stockIdx[1]?.price_raise_percent }}</span>
-          </div>
-            <img :src="stockIdx[1]?.chart_url" alt="">
-          </div>
-
-        </div>
-        <div class="d-flex flex-row" style="margin-top: 50px;">
-          <div style="width: 200px; height: 200px; border-radius: 15px;
-          box-shadow: 0px 0px 1px black; background-color: white; margin: auto;"
-          class="cardItem"
-          id="open-chart3-modal"
-          >
-        
-          <p style="margin-left: 10px; margin-top: 10px; font-weight: bold; font-size: 20px; margin-bottom: 5px;">{{ stockIdx[2]?.name }}</p>
-          <hr style="margin: 3px; color: red;">
-          <p style="margin-left: 10px; font-weight: bold; margin-bottom: 5px;" >{{ stockIdx[2]?.now_price}}</p>
-          <div :style="stockColor[2]">
-            <span style="margin-bottom: 0px; margin-left: 10px;">{{ stockIdx[2]?.price_raise }}</span>
-            <span style="margin-left: 10px;">{{  stockIdx[2]?.price_raise_percent }}</span>
-          </div>
-            <img :src="stockIdx[2]?.chart_url" alt="">
-        
-        </div>
-          <div style="width: 200px; height: 200px; border-radius: 15px;
-          box-shadow: 0px 0px 1px black; background-color: white; margin: auto;"
-          class="cardItem"
-          id="open-chart4-modal"
-          >
-          <p style="margin-left: 10px; margin-top: 10px; font-weight: bold; font-size: 20px; margin-bottom: 5px;">{{ stockIdx[3]?.name }}</p>
-          <hr style="margin: 3px; color: red;">
-          <p style="margin-left: 10px; font-weight: bold; margin-bottom: 5px;" >{{ stockIdx[3]?.now_price}}</p>
-          <div :style="stockColor[3]">
-            <span style="margin-bottom: 0px; margin-left: 10px;">{{ stockIdx[3]?.price_raise }}</span>
-            <span style="margin-left: 10px;">{{  stockIdx[3]?.price_raise_percent }}</span>
-          </div>
-            <img :src="stockIdx[3]?.chart_url" alt="">
-
-
-        </div>
-        </div>
-      </div>
-    </div>
-    <quiz/>
+    
     
   <!-- 모달창 -->
       <div id="chart1-modal">
@@ -405,9 +322,94 @@
           </div>
       </div>
     <!-- 모달창 끝 -->
+    <!-- 03 주식차트 -->
+    <div class="d-flex justify-content-center" style="width: 100%;">
+    <div class="d-flex">
+      <div style="width: 600px; height: 600px; border-radius: 15px;
+    box-shadow: 0px 0px 1px black; background-color: white;   margin-top: 50px; margin-bottom: 50px;"
+    id="chartDiv"
+    :class="fadeIn3"
+    >
+    <br>
+      <div class="d-flex align-items-center" style="width: 600px;">
+        <h3 style="font-weight: 550; color: rgb(68, 67, 67);  margin-left: 50px; filter: drop-shadow(0px 0px 1px rgb(128, 127, 127));">03. 오늘의 주식
+        </h3>
+        <img src="@/assets/CHART.png" alt="" style="width: 50px; margin-left: 10px; filter: drop-shadow(1px 1px 3px black); margin-bottom: 30px;" >
+      </div>
+      <div class="d-flex flex-column" >
+        <div class="d-flex flex-row" style="width: 100%;">
+          <div style="width: 200px; height: 200px; border-radius: 15px;
+          box-shadow: 0px 0px 1px black; background-color: white; margin: auto;"
+          class="cardItem"
+          id="open-chart1-modal"
+          >
+          <p style="margin-left: 10px; margin-top: 10px; font-weight: bold; font-size: 20px; margin-bottom: 5px;">{{ stockIdx[0]?.name }}</p>
+          <hr style="margin: 3px; color: red;">
+          <p style="margin-left: 10px; font-weight: bold; margin-bottom: 5px;" >{{ stockIdx[0]?.now_price}}</p>
+          <div :style="stockColor[0]">
+            <span style="margin-bottom: 0px; margin-left: 10px;">{{ stockIdx[0]?.price_raise }}</span>
+            <span style="margin-left: 10px;">{{  stockIdx[0]?.price_raise_percent }}</span>
+          </div>
+            <img :src="stockIdx[0]?.chart_url" alt="">
+          </div>
+
+          <div style="width: 200px; height: 200px; border-radius: 15px;
+          box-shadow: 0px 0px 1px black; background-color: white; margin: auto;"
+          class="cardItem"
+          id="open-chart2-modal"
+          >
+          
+          <p style="margin-left: 10px; margin-top: 10px; font-weight: bold; font-size: 20px; margin-bottom: 5px;">{{ stockIdx[1]?.name }}</p>
+          <hr style="margin: 3px; color: red;">
+          <p style="margin-left: 10px; font-weight: bold; margin-bottom: 5px;" >{{ stockIdx[1]?.now_price}}</p>
+          <div :style="stockColor[1]">
+            <span style="margin-bottom: 0px; margin-left: 10px;">{{ stockIdx[1]?.price_raise }}</span>
+            <span style="margin-left: 10px;">{{  stockIdx[1]?.price_raise_percent }}</span>
+          </div>
+            <img :src="stockIdx[1]?.chart_url" alt="">
+          </div>
+
+        </div>
+        <div class="d-flex flex-row" style="margin-top: 50px;width: 600px;">
+          <div style="width: 200px; height: 200px; border-radius: 15px;
+          box-shadow: 0px 0px 1px black; background-color: white; margin: auto;"
+          class="cardItem"
+          id="open-chart3-modal"
+          >
+        
+          <p style="margin-left: 10px; margin-top: 10px; font-weight: bold; font-size: 20px; margin-bottom: 5px;">{{ stockIdx[2]?.name }}</p>
+          <hr style="margin: 3px; color: red;">
+          <p style="margin-left: 10px; font-weight: bold; margin-bottom: 5px;" >{{ stockIdx[2]?.now_price}}</p>
+          <div :style="stockColor[2]">
+            <span style="margin-bottom: 0px; margin-left: 10px;">{{ stockIdx[2]?.price_raise }}</span>
+            <span style="margin-left: 10px;">{{  stockIdx[2]?.price_raise_percent }}</span>
+          </div>
+            <img :src="stockIdx[2]?.chart_url" alt="">
+        
+        </div>
+          <div style="width: 200px; height: 200px; border-radius: 15px;
+          box-shadow: 0px 0px 1px black; background-color: white; margin: auto;"
+          class="cardItem"
+          id="open-chart4-modal"
+          >
+          <p style="margin-left: 10px; margin-top: 10px; font-weight: bold; font-size: 20px; margin-bottom: 5px;">{{ stockIdx[3]?.name }}</p>
+          <hr style="margin: 3px; color: red;">
+          <p style="margin-left: 10px; font-weight: bold; margin-bottom: 5px;" >{{ stockIdx[3]?.now_price}}</p>
+          <div :style="stockColor[3]">
+            <span style="margin-bottom: 0px; margin-left: 10px;">{{ stockIdx[3]?.price_raise }}</span>
+            <span style="margin-left: 10px;">{{  stockIdx[3]?.price_raise_percent }}</span>
+          </div>
+            <img :src="stockIdx[3]?.chart_url" alt="">
+
+
+        </div>
+        </div>
+      </div>
+    </div>
       <Quiz 
       style="margin-top: 50px;"
       />
+    </div>
     </div>
 
     </div>
@@ -481,9 +483,9 @@ onMounted(()=>{
   const newsDiv = document.querySelector('#newsDiv')
   const youtubeDiv = document.querySelector('#youtubeDiv')
   const chartDiv = document.querySelector('#chartDiv')
-  //stores.getDjangoYoutube()
-  //stores.getDjangoNews()
-  //stores.getDjangoExchange()
+  // stores.getDjangoYoutube()
+  // stores.getDjangoNews()
+  // stores.getDjangoExchange()
   stores.getExchange()
   stores.getYoutube()
   stores.getNews()
